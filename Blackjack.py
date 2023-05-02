@@ -59,7 +59,7 @@ def hidedealerCard(dealerCards):
 |   \\"/ (  |
 | ( | | )  |
 |(__d b__) |
-|          |
+|~~~~~~~~~~|
 `----------'"""
     strings = [dealerCards[0].cardImage, hiddenCard]
     print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
