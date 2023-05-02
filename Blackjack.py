@@ -24,6 +24,7 @@ def dealcardDealer(playerCards, dealerCards, deck):
                 dealerCards.append(deck.deck[index])
                 break
     return dealerCards
+
 #Prints player cards
 def playerCardsToString(playerCards):
     strings = []
@@ -48,6 +49,7 @@ def dealerCardsToString(dealerCards):
     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
 
+#Prints dealer cards before player stands
 def hidedealerCard(dealerCards):
     print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
@@ -82,9 +84,8 @@ def calculateTotal(dealerCards, playerCards):
     while playeraces > 0 and playertotal > 21:
         playertotal -= 10
         playeraces -= 1
-    
-
     return dealertotal, playertotal
+
 def checkWinner (dealertotal, playertotal):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
@@ -146,18 +147,16 @@ while True:
             print ("Blackjack! You win")
         
         #Blackjack game commands   
-        #TODO: write code so that Ace value == 1 if total more than 21 
         while True:
             command = input()
             if command == "hit":#NYI
-                #FIXME: Dealer card needs to stay hidden until player stands
                 os.system('cls')
                 playerCards = dealcardPlayer(playerCards, dealerCards, deck)
                 playerCardsToString(playerCards)
                 hidedealerCard(dealerCards)
                 #Calculate total
                 
-
+                #TODO: game needs to reset once player stands
             elif command == "stand":
                 os.system('cls')
                 #Shows dealers hidden card
