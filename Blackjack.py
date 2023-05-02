@@ -51,7 +51,20 @@ def dealerCardsToString(dealerCards):
     for card in dealerCards:
         checktotal = checktotal + card.cardValue
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {checktotal}")
-
+def hidedealerCard(dealerCards):
+    print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
+    print (Fore.RED + Style.BRIGHT + "==============")
+    hiddenCard = """.----------.
+|  /\_/\ ( |
+| ( ^.^ )_)|
+|   \\"/ (  |
+| ( | | )  |
+|(__d b__) |
+|          |
+`----------'"""
+    strings = [dealerCards[0].cardImage, hiddenCard]
+    print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
+   
 def calculateTotal (dealerCards, playerCards):
     dealertotal = 0
     for card in dealerCards:
@@ -61,9 +74,21 @@ def calculateTotal (dealerCards, playerCards):
         playertotal = card.cardValue + playertotal
     return dealertotal, playertotal
 def checkWinner (dealertotal, playertotal):
-    if playertotal > 21 and dealertotal > 21:
-        print("Bust! Dealer wins.")
-    elif playertotal == 21 and dealertotal == 21:
+    if playertotal > 21:
+        print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
+    elif playertotal == 21 and dealertotal != 21:
+        print (Fore.YELLOW + Style.NORMAL+"Blackjack! you win")
+    elif dealertotal > 21:
+        print (Fore.YELLOW + Style.NORMAL+"You win!")
+    elif playertotal == dealertotal:
+        print(Fore.RED + Style.BRIGHT+"Both have the same value, it's a push")
+    elif playertotal > dealertotal:
+        print(Fore.YELLOW + Style.NORMAL+"You win!")
+    elif playertotal < dealertotal:
+        print(Fore.RED + Style.BRIGHT+"You lose!")
+
+
+
 
 
 
@@ -97,19 +122,7 @@ while True:
         dealerCards = dealcardDealer(playerCards, dealerCards, deck)
         dealerCards = dealcardDealer(playerCards, dealerCards, deck)
         playerCardsToString(playerCards)
-        print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
-        print (Fore.RED + Style.BRIGHT + "==============")
-        hiddenCard = """.----------.
-|  /\_/\ ( |
-| ( ^.^ )_)|
-|   \\"/ (  |
-| ( | | )  |
-|(__d b__) |
-|          |
-`----------'"""
-        strings = [dealerCards[0].cardImage, hiddenCard]
-        print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
-   
+        hidedealerCard(dealerCards)
         
         total = 0
         #Check if anyone has blackjack 
@@ -130,7 +143,7 @@ while True:
                 os.system('cls')
                 playerCards = dealcardPlayer(playerCards, dealerCards, deck)
                 playerCardsToString(playerCards)
-                dealerCardsToString(dealerCards)
+                hidedealerCard(dealerCards)
                 #Calculate total
                 
 
@@ -152,7 +165,7 @@ while True:
                         playerCardsToString(playerCards)
                         dealerCardsToString(dealerCards)
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-
+                checkWinner (dealertotal, playertotal)
 
 
 
