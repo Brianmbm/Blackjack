@@ -43,9 +43,9 @@ def dealerCardsToString(dealerCards):
     strings = []
     for i in range(len(dealerCards)):
         strings.append(dealerCards[i].cardImage)
-    #Stackoverflow solution to printing multiple line strings next to each other
     print(Fore.RED + Style.BRIGHT +"DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
+    #Stackoverflow solution to printing multiple line strings next to each other
     print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
     checktotal = 0
     for card in dealerCards:
@@ -77,11 +77,11 @@ def checkWinner (dealertotal, playertotal):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
     elif playertotal == 21 and dealertotal != 21:
-        print (Fore.YELLOW + Style.NORMAL+"Blackjack! you win")
+        print (Fore.YELLOW + Style.NORMAL+"Blackjack! You win")
     elif dealertotal > 21:
         print (Fore.YELLOW + Style.NORMAL+"You win!")
     elif playertotal == dealertotal:
-        print(Fore.RED + Style.BRIGHT+"Both have the same value, it's a push")
+        print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
     elif playertotal > dealertotal:
         print(Fore.YELLOW + Style.NORMAL+"You win!")
     elif playertotal < dealertotal:
@@ -91,18 +91,17 @@ def checkWinner (dealertotal, playertotal):
 
 
 
-
+#MAIN
 titles.printTitle() #Prints intro sequence
-
 while True:
     os.system('cls')
     
-    #Main Menu
-    print(Fore.YELLOW + Style.DIM+titles.maintitle2)
-    print(Fore.YELLOW + Style.DIM+"     ============================================================================\n\n\n\n")
-    print(Fore.YELLOW + Style.DIM +"     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
+    #Menu
+    print(Fore.YELLOW + titles.maintitle2)
+    print(Fore.YELLOW +"     ============================================================================\n\n\n\n")
+    print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
     
-    command = input(Fore.YELLOW + Style.DIM +"          Type number + enter:\n          ")
+    command = input(Fore.YELLOW + "          Type number + enter:\n          ")
     
     if command == "1":#(Play)
         #TODO: See if cards can be printed in center of console

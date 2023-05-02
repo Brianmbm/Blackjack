@@ -62,5 +62,5 @@ def printTitle():
 	print(Fore.GREEN + clubs)
 	time.sleep(0.5)
 	os.system('cls')
-	print(Fore.YELLOW + Style.DIM + spaces + maintitle)
+	print(Fore.YELLOW + spaces + maintitle)
 	time.sleep(1)
