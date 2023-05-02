@@ -52,6 +52,21 @@ def dealerCardsToString(dealerCards):
         checktotal = checktotal + card.cardValue
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {checktotal}")
 
+def calculateTotal (dealerCards, playerCards):
+    dealertotal = 0
+    for card in dealerCards:
+        dealertotal = card.cardValue + dealertotal
+    playertotal = 0
+    for card in playerCards:
+        playertotal = card.cardValue + playertotal
+    return dealertotal, playertotal
+def checkWinner (dealertotal, playertotal):
+    if playertotal > 21 and dealertotal > 21:
+        print("Bust! Dealer wins.")
+    elif playertotal == 21 and dealertotal == 21:
+
+
+
 titles.printTitle() #Prints intro sequence
 
 while True:
@@ -66,7 +81,7 @@ while True:
     
     if command == "1":#(Play)
         #TODO: See if cards can be printed in center of console
-        #TODO: See if dealcardPlayer and dealcardDealer need to be 2 separate functions
+        #TODO: See if dealcardPlayer and dealcardDealer need to be 2 separate functions or can it be one?
         #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
         #and dealer wins if player deposit == 0. Make minimun bet for each round. Implement double and surrender
         os.system('cls')
@@ -111,6 +126,7 @@ while True:
         while True:
             command = input()
             if command == "hit":#NYI
+                #FIXME: Dealer card needs to stay hidden until player stands
                 os.system('cls')
                 playerCards = dealcardPlayer(playerCards, dealerCards, deck)
                 playerCardsToString(playerCards)
@@ -124,6 +140,7 @@ while True:
                 playerCardsToString(playerCards)
                 dealerCardsToString(dealerCards)
                 #If dealer points less than 17, dealer takes card
+                ##TODO: See if calculateTotal def can be used here
                 checktotal = 0
                 while checktotal < 17:
                     checktotal = 0
@@ -134,7 +151,9 @@ while True:
                         os.system('cls')
                         playerCardsToString(playerCards)
                         dealerCardsToString(dealerCards)
-                
+                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+
+
 
 
 
