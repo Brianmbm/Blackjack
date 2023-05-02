@@ -4,8 +4,7 @@ class Card:
         self.cardName = cardName
         self.cardValue = int(cardValue)
         self.cardImage = cardImage
-    def __str__(self):
-        return f"{self.cardImage}"
+
 
 
 class CardDeck:

@@ -99,10 +99,10 @@ while True:
     
     #Main Menu
     print(Fore.YELLOW + Style.DIM+titles.maintitle2)
-    print(Fore.YELLOW + Style.DIM+"============================================================================\n\n\n\n\n\n\n")
-    print("     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit")
+    print(Fore.YELLOW + Style.DIM+"     ============================================================================\n\n\n\n")
+    print(Fore.YELLOW + Style.DIM +"     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
     
-    command = input("Type number + enter:\n")
+    command = input(Fore.YELLOW + Style.DIM +"          Type number + enter:\n          ")
     
     if command == "1":#(Play)
         #TODO: See if cards can be printed in center of console
