@@ -33,10 +33,8 @@ def playerCardsToString(playerCards):
     print(Fore.RED + Style.BRIGHT +"PLAYER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
     print(*[Fore.YELLOW + Style.BRIGHT + ''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
-    checktotal = 0
-    for card in playerCards:
-        checktotal = checktotal + card.cardValue
-    print(Fore.YELLOW + Style.BRIGHT + f"Total: {checktotal}\n\n")
+    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+    print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n\n")
 
 #Prints dealer cards
 def dealerCardsToString(dealerCards):
@@ -47,10 +45,9 @@ def dealerCardsToString(dealerCards):
     print (Fore.RED + Style.BRIGHT + "==============")
     #Stackoverflow solution to printing multiple line strings next to each other
     print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
-    checktotal = 0
-    for card in dealerCards:
-        checktotal = checktotal + card.cardValue
-    print(Fore.YELLOW + Style.BRIGHT + f"Total: {checktotal}")
+    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+    print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
+
 def hidedealerCard(dealerCards):
     print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
@@ -65,13 +62,28 @@ def hidedealerCard(dealerCards):
     strings = [dealerCards[0].cardImage, hiddenCard]
     print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
    
-def calculateTotal (dealerCards, playerCards):
+def calculateTotal(dealerCards, playerCards):
     dealertotal = 0
+    dealeraces = 0
     for card in dealerCards:
-        dealertotal = card.cardValue + dealertotal
+        if card.cardValue == 11:
+            dealeraces += 1
+        dealertotal += card.cardValue
+    while dealeraces > 0 and dealertotal > 21:
+        dealertotal -= 10
+        dealeraces -= 1
+    
     playertotal = 0
+    playeraces = 0
     for card in playerCards:
-        playertotal = card.cardValue + playertotal
+        if card.cardValue == 11:
+            playeraces += 1
+        playertotal += card.cardValue
+    while playeraces > 0 and playertotal > 21:
+        playertotal -= 10
+        playeraces -= 1
+    
+
     return dealertotal, playertotal
 def checkWinner (dealertotal, playertotal):
     if playertotal > 21:
@@ -98,7 +110,7 @@ while True:
     
     #Menu
     print(Fore.YELLOW + titles.maintitle2)
-    print(Fore.YELLOW +"     ============================================================================\n\n\n\n")
+    print(Fore.YELLOW +"     =============================================================================\n\n\n\n")
     print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
     
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
