@@ -121,6 +121,7 @@ while True:
         #TODO: See if dealcardPlayer and dealcardDealer need to be 2 separate functions or can it be one?
         #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
         #and dealer wins if player deposit == 0. Make minimun bet for each round. Implement double and surrender
+        #TODO: Fix commands during game
         os.system('cls')
         
         #Initialize deck for the round
