@@ -33,7 +33,7 @@ def playerCardsToString(playerCards):
     #Stackoverflow solution to printing multiple line strings next to each other
     print(Fore.RED + Style.BRIGHT +"PLAYER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
-    print(*[Fore.YELLOW + Style.BRIGHT + ''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
+    print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n\n")
 
@@ -45,7 +45,7 @@ def dealerCardsToString(dealerCards):
     print(Fore.RED + Style.BRIGHT +"DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
     #Stackoverflow solution to printing multiple line strings next to each other
-    print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
+    print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
 
@@ -62,7 +62,7 @@ def hidedealerCard(dealerCards):
 |          |
 `----------'"""
     strings = [dealerCards[0].cardImage, hiddenCard]
-    print(*[Fore.YELLOW + Style.BRIGHT +''.join(x) for x in zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings])], sep='\n')
+    print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
    
 def calculateTotal(dealerCards, playerCards):
     dealertotal = 0
