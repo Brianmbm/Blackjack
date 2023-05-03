@@ -106,8 +106,6 @@ while True:
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
     
     if command == "1":#(Play)
-        #TODO: See if cards can be printed in center of console
-        #TODO: See if dealcardPlayer and dealcardDealer need to be 2 separate functions or can it be one?
         #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
         #and dealer wins if player deposit == 0. Make minimun bet for each round. Implement double and surrender
         #TODO: Fix commands during game
@@ -163,7 +161,7 @@ while True:
                         break
                     else:
                         continue
-                    #TODO: game needs to end once player stands
+
                 elif command == "s":#(stand):
                     os.system('cls')
                     #Shows dealers hidden card
@@ -187,10 +185,6 @@ while True:
                     
                     time.sleep(4)
                     break
-                
-
-
-
                 elif command == "d": #double":#NYI
                     ()
                 elif command == "save":#NYI
@@ -205,7 +199,6 @@ while True:
                     titles.gameMenu()
                     print(Fore.RED+"invalid command")
 
-    
     elif command == "2":#NYI (Load)
         ()
     #TODO: shorten rules or create two pages
