@@ -6,6 +6,8 @@ import titles
 import random
 import colorama
 from colorama import Fore, Back, Style
+
+
 colorama.init(autoreset=True)#Resets color for every string printed
 
 #Deal one card to player
