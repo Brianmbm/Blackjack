@@ -188,7 +188,9 @@ while True:
     
     elif command == "2":#NYI (Load)
         ()
-    elif command == "3":#NYI (Rules)#TODO: shorten rules or create two pages
+    #TODO: shorten rules or create two pages
+    #TODO: add rules about bets once deposit implemented
+    elif command == "3":#NYI (Rules)
        os.system('cls')
        titles.gameRules() 
        command = input()
