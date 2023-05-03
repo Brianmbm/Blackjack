@@ -37,7 +37,7 @@ def dealerCardsToString(dealerCards):
         strings.append(dealerCards[i].cardImage)
     print(Fore.RED + Style.BRIGHT +"DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
-    #Stackoverflow solution to printing multiple line strings next to each other
+    #Stackoverflow solution to printing multiple-line strings next to each other.
     print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
@@ -154,7 +154,11 @@ while True:
                 hidedealerCard(dealerCards)
                 titles.gameMenu()
                 #Calculate total
-                
+                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                if playertotal >= 21:
+                    checkWinner (dealertotal, playertotal)
+                else:
+                    continue
                 #TODO: game needs to end once player stands
             elif command == "s":#(stand):
                 os.system('cls')
@@ -174,6 +178,7 @@ while True:
                         playerCardsToString(playerCards)
                         dealerCardsToString(dealerCards)
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+
                 checkWinner (dealertotal, playertotal)
                 titles.gameMenu()
 
