@@ -5,21 +5,21 @@ from colorama import Fore, Back, Style
 
 #strings used in initial sequence
 
-heart = """\n\n .-~~~-__-~~~-.
-{              }
- `.          .'
-   `.      .'
-     `.  .'
-       \/"""
+heart = """\n\n\n    .-~~~-__-~~~-.
+   {              }
+    `.          .'
+      `.      .'
+        `.  .'
+          \/"""
 
-spade = """\n\n\n		       /\\
-  		     .'  `.
-		    '      `.
-		 .'          `.
-		{              }
-		 ~-...-||-...-~
-		       ||
-		      '--`"""
+spade = """\n\n\n 		        /\\
+  		      .'  `.
+		     '      `.
+		  .'          `.
+		 {              }
+		  ~-...-||-...-~
+		        ||
+		       '--`"""
 diamond = """\n\n\n\n\n\n				    /\\
  				  .'  `.
 				 '      `.
@@ -27,13 +27,13 @@ diamond = """\n\n\n\n\n\n				    /\\
  				`.      .'
   				  `.  .'
   				    \/"""
-clubs = """\n\n\n\n\n\n\n\n\n 					    .-~~-.
- 					   {      }
-				        .-~-.    .-~-.
-				       {              }
- 					`.__.'||`.__.'
-				              ||
- 					     '--`"""
+clubs = """\n\n\n\n\n\n\n 					      .-~~-.
+ 					     {      }
+				          .-~-.    .-~-.
+				         {              }
+ 					  `.__.'||`.__.'
+				                ||
+ 					       '--`"""
 maintitle = """			██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
 			██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
 			██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
@@ -50,16 +50,16 @@ spaces = "\n\n\n\n\n\n\n\n\n\n"
 
 #Initial sequence when starting game
 def printTitle():
-	print(Fore.RED + heart)
+	print(Fore.RED + heart* 2)
 	time.sleep(0.5)
 	os.system('cls')
-	print(Fore.YELLOW + spade)
-	time.sleep(0.5)
+	print(Fore.YELLOW + spade * 2)
+	time.sleep(0.3)
 	os.system('cls')
-	print(Fore.MAGENTA + diamond)
-	time.sleep(0.5)
+	print(Fore.MAGENTA + diamond * 2)
+	time.sleep(0.3)
 	os.system('cls')
-	print(Fore.GREEN + clubs)
+	print(Fore.GREEN + clubs * 2)
 	time.sleep(0.5)
 	os.system('cls')
 	print(Fore.YELLOW + spaces + maintitle)
@@ -81,29 +81,25 @@ The hand with the highest total wins as long as it doesn't exceed 21.
 A hand with a higher total than 21 is said to bust.
 Cards 2 through 10 are worth their face value, and face cards (jack, queen, king) are also worth 10. 
 An ace's value is 11 unless this would cause the player to bust, in which case it is worth 1.
-
 The goal of each player is to beat the dealer by having the higher, unbusted hand. 
 Note that if the player busts he loses, even if the dealer also busts (therefore Blackjack favors the dealer).
 If both the player and the dealer have the same point value, neither win the hand.
 The dealer gives two cards to each player, including himself.
 One of the dealer's two cards is face-up, and the other is face down.
-
 The play goes as follows:
 If the dealer has blackjack and the player doesn't, the player automatically loses.
 If the player has blackjack and the dealer doesn't, the player automatically wins.
 If both the player and dealer have blackjack then it's a push.
 If neither side has blackjack, then the player plays out his hand.
 When the player has finished the dealer plays his hand.
-
 The player's options are:
-Hit: Take another card.
-Stand: Take no more cards.
-Double down: Double the wager, take exactly one more card, and then stand.
-
+ - Hit: Take another card.
+ - Stand: Take no more cards.
+ - Double down: Double the wager, take exactly one more card, and then stand.
 The player's turn is over after deciding to stand, doubling down to take a single card, or busting.
 If the player busts, he or she loses the bet even if the dealer goes on to bust.
-
 After the player has finished making his or her decisions, 
 the dealer then reveals his or her hidden hole card and plays the hand. 
-House rules say that the dealer must hit until he or she has at least 17, regardless of what the players have. 
-""")
+House rules say that the dealer must hit until he or she has at least 17, regardless of what the players have."""
+)
+	print(Fore.RED + "\nPress enter to go back to menu.")
