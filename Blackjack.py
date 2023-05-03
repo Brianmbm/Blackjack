@@ -17,7 +17,7 @@ def dealcard(playerCards, dealerCards, deck, addtoHand):
             break
     return addtoHand
 
-
+#TODO: CardsToString functions might be refactorable into one
 #Prints player cards
 def playerCardsToString(playerCards):
     strings = []
@@ -43,7 +43,7 @@ def dealerCardsToString(dealerCards):
     print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
 
 #Prints dealer cards before player stands
-def hidedealerCard(dealerCards):
+def hiddenCardsToString(dealerCards):
     print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "==============")
     hiddenCard = """.----------.
@@ -94,9 +94,6 @@ def checkWinner (dealertotal, playertotal):
         print(Fore.RED + Style.BRIGHT+"You lose!")
 
 
-
-
-
 #MAIN
 
 titles.printTitle() #Prints intro sequence
@@ -132,31 +129,31 @@ while True:
 
             #Prints the player's hand and the dealer's with a hidden card and the commands menu
             playerCardsToString(playerCards)
-            hidedealerCard(dealerCards)
+            hiddenCardsToString(dealerCards)
             titles.gameMenu()
 
         
             #Check if anyone has blackjack from the start
             #TODO: If anyone has blackjack need to stop game
-            if dealerCards[0].cardValue + dealerCards[1].cardValue == 21 and playerCards[0].cardValue + playerCards[1].cardValue == 21:
-                print("You both have blackjack, it's a push")
-            elif dealerCards[0].cardValue + dealerCards[1].cardValue == 21:
-                print ("Dealer has blackjack, you lose")
-            elif playerCards[0].cardValue + playerCards[1].cardValue == 21:
-                print ("Blackjack! You win")
         
 
             #Blackjack game commands   
             while True:
-            
-            
                 command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
+                
+                
+                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                if playertotal > 21 or dealertotal > 21:
+                    playerCardsToString(playerCards)
+                    hiddenCardsToString(dealerCards)
+                    checkWinner (dealertotal, playertotal)
+
                 #TODO: Check if need to add time.sleep to more places for better flow
-                if command == "w": #(hit)" NYI
+                elif command == "w": #(hit)" NYI
                     os.system('cls')
                     playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                     playerCardsToString(playerCards)
-                    hidedealerCard(dealerCards)
+                    hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     #Calculate total
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
@@ -184,9 +181,10 @@ while True:
                             os.system('cls')
                             playerCardsToString(playerCards)
                             dealerCardsToString(dealerCards)
+                    titles.gameMenu()
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     checkWinner (dealertotal, playertotal)
-                    titles.gameMenu()
+                    
                     time.sleep(4)
                     break
                 
@@ -203,7 +201,7 @@ while True:
                     os.system('cls')
                     #Shows dealers hidden card
                     playerCardsToString(playerCards)
-                    hidedealerCard(dealerCards)
+                    hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     print(Fore.RED+"invalid command")
 
