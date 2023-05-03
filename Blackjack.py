@@ -101,7 +101,8 @@ def checkWinner (dealertotal, playertotal):
 
 titles.printTitle() #Prints intro sequence
 while True:
-
+    #TODO: Find code to take command as Key press down instead of enter
+    #FIXME: When exiting to main menu from game or rules, color of title is off
     #Menu
     os.system('cls')
     titles.firstMenu()
@@ -145,6 +146,7 @@ while True:
             
             
             command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
+            #TODO: Game needs to end if player gets more than 21 after hit
             if command == "w": #(hit)" NYI
                 os.system('cls')
                 playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
@@ -153,7 +155,7 @@ while True:
                 titles.gameMenu()
                 #Calculate total
                 
-                #TODO: game needs to reset once player stands
+                #TODO: game needs to end once player stands
             elif command == "s":#(stand):
                 os.system('cls')
                 #Shows dealers hidden card
@@ -179,8 +181,6 @@ while True:
 
             elif command == "d": #double":#NYI
                 ()
-            elif command == "a": #surrender":#NYI
-                ()
             elif command == "save":#NYI
                 ()
             elif command == "q":#(quit):
@@ -189,8 +189,10 @@ while True:
     
     elif command == "2":#NYI (Load)
         ()
-    elif command == "3":#NYI (Rules)
-       ()  
+    elif command == "3":#NYI (Rules)#TODO: shorten rules or create two pages
+       os.system('cls')
+       titles.gameRules() 
+       command = input()
     elif command == "4":#(Quit)
         break
     else: 
