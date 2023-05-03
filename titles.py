@@ -12,7 +12,7 @@ heart = """\n\n\n    .-~~~-__-~~~-.
         `.  .'
           \/"""
 
-spade = """\n\n\n 		        /\\
+spade = """\n\n\n\n 		        /\\
   		      .'  `.
 		     '      `.
 		  .'          `.
@@ -34,12 +34,12 @@ clubs = """\n\n\n\n\n\n\n 					      .-~~-.
  					  `.__.'||`.__.'
 				                ||
  					       '--`"""
-maintitle = """			██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
-			██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
-			██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
-			██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
-			██████╔╝███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
-			╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝"""
+maintitle = """		    ██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
+		    ██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
+		    ██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
+		    ██╔══██╗██║     ██╔══██║██║     ██╔═██╗ ██   ██║██╔══██║██║     ██╔═██╗ 
+		    ██████╔╝███████╗██║  ██║╚██████╗██║  ██╗╚█████╔╝██║  ██║╚██████╗██║  ██╗
+		    ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝"""
 maintitle2 = Fore.YELLOW + Style.NORMAL +"""\n\n	██████╗ ██╗      █████╗  ██████╗██╗  ██╗     ██╗ █████╗  ██████╗██╗  ██╗
 	██╔══██╗██║     ██╔══██╗██╔════╝██║ ██╔╝     ██║██╔══██╗██╔════╝██║ ██╔╝
 	██████╔╝██║     ███████║██║     █████╔╝      ██║███████║██║     █████╔╝ 
@@ -50,16 +50,16 @@ spaces = "\n\n\n\n\n\n\n\n\n\n"
 
 #Initial sequence when starting game
 def printTitle():
-	print(Fore.RED + heart* 2)
+	print(Fore.RED + heart)
 	time.sleep(0.5)
 	os.system('cls')
-	print(Fore.YELLOW + spade * 2)
+	print(Fore.YELLOW + spade)
 	time.sleep(0.3)
 	os.system('cls')
-	print(Fore.MAGENTA + diamond * 2)
+	print(Fore.MAGENTA + diamond)
 	time.sleep(0.3)
 	os.system('cls')
-	print(Fore.GREEN + clubs * 2)
+	print(Fore.GREEN + clubs)
 	time.sleep(0.5)
 	os.system('cls')
 	print(Fore.YELLOW + spaces + maintitle)
@@ -71,7 +71,7 @@ def firstMenu():
 	print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
 
 def gameMenu():
-	print(Fore.YELLOW + Style.BRIGHT + "Commands:\nw = hit       s = stand\nd = double    q = quit\n")
+	print(Fore.YELLOW + Style.BRIGHT + "w = hit       s = stand\nd = double    q = quit")
 
 def gameRules():
 	print("""Rules of Blackjack
