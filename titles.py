@@ -69,3 +69,6 @@ def firstMenu():
 	print(Fore.YELLOW + maintitle2)
 	print(Fore.YELLOW +"     =============================================================================\n\n\n\n")
 	print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
+
+def gameMenu():
+	print(Fore.YELLOW + Style.BRIGHT + "Commands:\nw = hit       s = stand        a = surrender\nd = double    q = quit\n")

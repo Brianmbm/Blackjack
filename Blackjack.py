@@ -128,7 +128,7 @@ while True:
         dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
         playerCardsToString(playerCards)
         hidedealerCard(dealerCards)
-        
+        titles.gameMenu()
         total = 0
         #Check if anyone has blackjack 
         #TODO: If anyone has blackjack need to stop game
@@ -139,14 +139,18 @@ while True:
         elif playerCards[0].cardValue + playerCards[1].cardValue == 21:
             print ("Blackjack! You win")
         
+
         #Blackjack game commands   
         while True:
-            command = input()
+            
+            
+            command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
             if command == "w": #(hit)" NYI
                 os.system('cls')
                 playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                 playerCardsToString(playerCards)
                 hidedealerCard(dealerCards)
+                titles.gameMenu()
                 #Calculate total
                 
                 #TODO: game needs to reset once player stands
@@ -169,13 +173,13 @@ while True:
                         dealerCardsToString(dealerCards)
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                 checkWinner (dealertotal, playertotal)
+                titles.gameMenu()
 
 
 
-
-            elif command == "double":#NYI
+            elif command == "d": #double":#NYI
                 ()
-            elif command == "surrender":#NYI
+            elif command == "a": #surrender":#NYI
                 ()
             elif command == "save":#NYI
                 ()
