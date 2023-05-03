@@ -9,21 +9,14 @@ from colorama import Fore, Back, Style
 colorama.init(autoreset=True)#Resets color for every string printed
 
 #Deal one card to player
-def dealcardPlayer(playerCards, dealerCards, deck):
+def dealcard(playerCards, dealerCards, deck, addtoHand):
     while True:
-            index = random.randint(0, 51)
-            if deck.deck[index] not in playerCards or dealerCards:
-                playerCards.append(deck.deck[index])
-                break
-    return playerCards
-#Deal one card to dealer
-def dealcardDealer(playerCards, dealerCards, deck):
-    while True:
-            index = random.randint(0, 51)
-            if deck.deck[index] not in playerCards or dealerCards:
-                dealerCards.append(deck.deck[index])
-                break
-    return dealerCards
+        index = random.randint(0, 51)
+        if deck.deck[index] not in playerCards or dealerCards:
+            addtoHand.append(deck.deck[index])
+            break
+    return addtoHand
+
 
 #Prints player cards
 def playerCardsToString(playerCards):
@@ -105,14 +98,13 @@ def checkWinner (dealertotal, playertotal):
 
 
 #MAIN
+
 titles.printTitle() #Prints intro sequence
 while True:
-    os.system('cls')
-    
+
     #Menu
-    print(Fore.YELLOW + titles.maintitle2)
-    print(Fore.YELLOW +"     =============================================================================\n\n\n\n")
-    print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
+    os.system('cls')
+    titles.firstMenu()
     
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
     
@@ -130,10 +122,10 @@ while True:
         dealerCards = []
 
         #First hand
-        playerCards = dealcardPlayer(playerCards, dealerCards, deck)
-        playerCards = dealcardPlayer(playerCards, dealerCards, deck)
-        dealerCards = dealcardDealer(playerCards, dealerCards, deck)
-        dealerCards = dealcardDealer(playerCards, dealerCards, deck)
+        playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+        playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
         playerCardsToString(playerCards)
         hidedealerCard(dealerCards)
         
@@ -150,15 +142,15 @@ while True:
         #Blackjack game commands   
         while True:
             command = input()
-            if command == "hit":#NYI
+            if command == "w": #(hit)" NYI
                 os.system('cls')
-                playerCards = dealcardPlayer(playerCards, dealerCards, deck)
+                playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                 playerCardsToString(playerCards)
                 hidedealerCard(dealerCards)
                 #Calculate total
                 
                 #TODO: game needs to reset once player stands
-            elif command == "stand":
+            elif command == "s":#(stand):
                 os.system('cls')
                 #Shows dealers hidden card
                 playerCardsToString(playerCards)
@@ -171,7 +163,7 @@ while True:
                     for card in dealerCards:
                         checktotal = checktotal + card.cardValue
                     if checktotal < 17:
-                        dealerCards = dealcardDealer(playerCards, dealerCards, deck)
+                        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                         os.system('cls')
                         playerCardsToString(playerCards)
                         dealerCardsToString(dealerCards)
@@ -187,7 +179,7 @@ while True:
                 ()
             elif command == "save":#NYI
                 ()
-            elif command == "exit":
+            elif command == "q":#(quit):
                 break
 
     
