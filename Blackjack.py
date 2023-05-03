@@ -102,7 +102,6 @@ def checkWinner (dealertotal, playertotal):
 titles.printTitle() #Prints intro sequence
 while True:
     #TODO: Find code to take command as Key press down instead of enter
-    #FIXME: When exiting to main menu from game or rules, color of title is off
     #Menu
     os.system('cls')
     titles.firstMenu()
