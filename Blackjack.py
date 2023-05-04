@@ -89,14 +89,14 @@ def checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds):
         dealerfunds -= bet
     elif playertotal == dealertotal:
         print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
-        playerfunds -= bet
-        dealerfunds += bet
     elif playertotal > dealertotal:
         print(Fore.GREEN + Style.BRIGHT+"You win!")
         playerfunds += bet
         dealerfunds -= bet
     elif playertotal < dealertotal:
         print(Fore.RED + Style.BRIGHT+"You lose!")
+        playerfunds -= bet
+        dealerfunds += bet
     return playerfunds, dealerfunds   
 
 
