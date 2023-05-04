@@ -26,11 +26,14 @@ def cardsToString(cards, title):
         strings.append(cards[i].cardImage)
     print(Fore.RED + Style.BRIGHT + title)
     print(Fore.RED + Style.BRIGHT + "==============")
+    #Stackoverflow solution to printing multiple-line strings next to each other
     print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
-    dealertotal, playertotal = calculateTotal(cards, [])
+    
     if title == "PLAYER'S HAND":
+        dealertotal, playertotal = calculateTotal([],cards)
         print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n\n")
     else:
+        dealertotal, playertotal = calculateTotal(cards,[])
         print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
 
 
@@ -75,13 +78,13 @@ def checkWinner (dealertotal, playertotal):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
     elif playertotal == 21 and dealertotal != 21:
-        print (Fore.YELLOW + Style.NORMAL+"Blackjack! You win")
+        print (Fore.GREEN + Style.BRIGHT+"Blackjack! You win")
     elif dealertotal > 21:
-        print (Fore.YELLOW + Style.NORMAL+"You win!")
+        print (Fore.GREEN + Style.BRIGHT+"You win!")
     elif playertotal == dealertotal:
         print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
     elif playertotal > dealertotal:
-        print(Fore.YELLOW + Style.NORMAL+"You win!")
+        print(Fore.GREEN + Style.BRIGHT+"You win!")
     elif playertotal < dealertotal:
         print(Fore.RED + Style.BRIGHT+"You lose!")
 
@@ -163,18 +166,13 @@ while True:
                     cardsToString(dealerCards, "DEALER'S HAND")
 
                     #If dealer points less than 17, dealer takes card
-                    ##TODO: See if calculateTotal def can be used here
-                    checktotal = 0
-                    while checktotal < 17:
-                        checktotal = 0
-                        for card in dealerCards:
-                            checktotal = checktotal + card.cardValue
-                        if checktotal < 17:
-                            dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-                            os.system('cls')
-                            cardsToString(playerCards, "PLAYER'S HAND")
-                            cardsToString(dealerCards, "DEALER'S HAND")
-
+                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                    while dealertotal < 17:
+                        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+                        os.system('cls')
+                        cardsToString(playerCards, "PLAYER'S HAND")
+                        cardsToString(dealerCards, "DEALER'S HAND")
+                        dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     titles.gameMenu()
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     checkWinner (dealertotal, playertotal)
