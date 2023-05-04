@@ -122,18 +122,18 @@ while True:
             dealerCards = []
 
             #First hand
-            playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+            playerCards = dealcard(playerCards, dealerCards, deck, playerCards) 
             playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
 
             #Prints the player's hand and the dealer's with a hidden card and the commands menu
             playerCardsToString(playerCards)
+            time.sleep(1)
             hiddenCardsToString(dealerCards)
+            time.sleep(0.5)
             titles.gameMenu()
 
-        
-            #Check if anyone has blackjack from the start
             #TODO: If anyone has blackjack need to stop game
         
 
@@ -141,12 +141,14 @@ while True:
             while True:
                 command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
                 
-                
+                #Check if anyone has blackjack from the start
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                 if playertotal > 21 or dealertotal > 21:
                     playerCardsToString(playerCards)
                     hiddenCardsToString(dealerCards)
                     checkWinner (dealertotal, playertotal)
+                    time.sleep(4)
+                    break
 
                 #TODO: Check if need to add time.sleep to more places for better flow
                 elif command == "w": #(hit)" NYI
@@ -187,12 +189,16 @@ while True:
                     
                     time.sleep(4)
                     break
+
                 elif command == "d": #double":#NYI
                     ()
+
                 elif command == "save":#NYI
                     ()
+
                 elif command == "q":#(quit):
                     break
+
                 else:
                     os.system('cls')
                     #Shows dealers hidden card
