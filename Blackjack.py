@@ -123,7 +123,7 @@ while True:
         while command != "q":
             os.system('cls')
             print(f"Player's funds:{playerfunds}$    Dealer's funds:{dealerfunds}$")
-            
+            #TODO: Change text so it doesnt print minimum twice when wrong input
             while True:
                 try:
                     bet = int(input(Fore.YELLOW + "Minimum bet is 1$.\nHow much do you want to bet?\n"))
@@ -156,7 +156,7 @@ while True:
             time.sleep(0.5)
             titles.gameMenu()
         
-
+            #TODO: print funds after hitting or standing
             #Blackjack game commands   
             while True:
                 command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
