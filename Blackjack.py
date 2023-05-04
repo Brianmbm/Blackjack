@@ -25,22 +25,22 @@ def cardsToString(cards, title):
     for i in range(len(cards)):
         strings.append(cards[i].cardImage)
     print(Fore.RED + Style.BRIGHT + title)
-    print(Fore.RED + Style.BRIGHT + "==============")
+    print(Fore.RED + Style.BRIGHT + "  ==============")
     #Stackoverflow solution to printing multiple-line strings next to each other
     print(*[Fore.YELLOW + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
     
-    if title == "PLAYER'S HAND":
+    if title == "  PLAYER'S HAND":
         dealertotal, playertotal = calculateTotal([],cards)
-        print(Fore.YELLOW + "Total: "+ Fore.GREEN +f"{playertotal}\n")
+        print(Fore.YELLOW + "  Total: "+ Fore.GREEN +f"{playertotal}\n")
     else:
         dealertotal, playertotal = calculateTotal(cards,[])
-        print(Fore.YELLOW + "Total: "+ Fore.GREEN +f"{dealertotal}")
+        print(Fore.YELLOW + "  Total: "+ Fore.GREEN +f"{dealertotal}")
 
 
 #Prints dealer cards before player stands
 def hiddenCardsToString(dealerCards):
-    print(Fore.RED + Style.BRIGHT + "DEALER'S HAND")
-    print (Fore.RED + Style.BRIGHT + "==============")
+    print(Fore.RED + Style.BRIGHT + "  DEALER'S HAND")
+    print (Fore.RED + Style.BRIGHT + "  ==============")
     hiddenCard = """.----------.
 |  /\_/\ ( |
 | ( ^.^ )_)|
@@ -99,8 +99,9 @@ def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
         dealerbalance += bet
     return playerbalance, dealerbalance   
 def printBalance():
-    print(Fore.YELLOW + f"Bet:"+ Fore.GREEN +f"{bet}$"+Fore.YELLOW +"   Player's funds:"+ Fore.GREEN +f"{playerbalance}$"+Fore.YELLOW +"    Dealer's funds:"+ Fore.GREEN +f"{dealerbalance}$\n")
-
+    print(Fore.YELLOW + f"  Bet:"+ Fore.GREEN +f"{bet}$"+Fore.YELLOW +"   Player's funds:"+ Fore.GREEN +f"{playerbalance}$"+Fore.YELLOW +"    Dealer's funds:"+ Fore.GREEN +f"{dealerbalance}$\n")
+playhand = "  PLAYER'S HAND"
+dealhand = "  DEALER'S HAND"
 #MAIN
 
 titles.printTitle() #Prints intro sequence
@@ -155,7 +156,7 @@ while True:
             #Prints the player's hand and the dealer's with a hidden card and the commands menu
             os.system('cls')
             printBalance()
-            cardsToString(playerCards, "PLAYER'S HAND")
+            cardsToString(playerCards, playhand)
             time.sleep(0.5)
             hiddenCardsToString(dealerCards)
             time.sleep(0.5)
@@ -163,13 +164,13 @@ while True:
         
             #Blackjack game commands   
             while True:
-                command = input(Fore.YELLOW +"Command:")
+                command = input(Fore.YELLOW +"  Command:")
                 
                 #Check if anyone has blackjack from the start
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                 if playertotal > 21 or dealertotal > 21:
                     printBalance()
-                    cardsToString(playerCards, "PLAYER'S HAND")
+                    cardsToString(playerCards, playhand)
                     hiddenCardsToString(dealerCards)
                     playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                     time.sleep(4)
@@ -180,7 +181,7 @@ while True:
                     os.system('cls')
                     playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                     printBalance()
-                    cardsToString(playerCards, "PLAYER'S HAND")
+                    cardsToString(playerCards, playhand)
                     hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     #Calculate total
@@ -196,8 +197,8 @@ while True:
                     os.system('cls')
                     #Shows dealers hidden card
                     printBalance()
-                    cardsToString(playerCards, "PLAYER'S HAND")
-                    cardsToString(dealerCards, "DEALER'S HAND")
+                    cardsToString(playerCards, playhand)
+                    cardsToString(dealerCards, dealhand)
 
                     #If dealer points less than 17, dealer takes card
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
@@ -205,8 +206,8 @@ while True:
                         dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                         os.system('cls')
                         printBalance()
-                        cardsToString(playerCards, "PLAYER'S HAND")
-                        cardsToString(dealerCards, "DEALER'S HAND")
+                        cardsToString(playerCards, playhand)
+                        cardsToString(dealerCards, dealhand)
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     titles.gameMenu()
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
@@ -226,7 +227,7 @@ while True:
 
                 else:
                     os.system('cls')
-                    cardsToString(playerCards, "PLAYER'S HAND")
+                    cardsToString(playerCards, playhand)
                     hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     print(Fore.RED+"invalid command")
