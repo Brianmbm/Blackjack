@@ -25,11 +25,7 @@ class CardDeck:
 
                 self.deck.append(Card(card_name, card_value, card_image))
 
-    #ChatGPT cheat "the CardDeck class now implements the __iter__ method which initializes the current_index attribute to 0 
-    #and returns self as the iterator object. It also implements the __next__ method which checks if the current index is 
-    #less than the length of the deck list, and if it is, returns the card at the current index and increments the index. 
-    #If the current index is equal to or greater than the length of the deck list, 
-    #it raises a StopIteration exception to signal the end of the iteration."
+    #ChatGPT cheat-code below because I could not figure why i could not iterate through the whole deck to initialize it (to be fair, it was before we went through Python class/magic methods in-lesson)
 
     def __iter__(self):
         self.current_index = 0

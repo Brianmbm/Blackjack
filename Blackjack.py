@@ -27,14 +27,14 @@ def cardsToString(cards, title):
     print(Fore.RED + Style.BRIGHT + title)
     print(Fore.RED + Style.BRIGHT + "==============")
     #Stackoverflow solution to printing multiple-line strings next to each other
-    print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
+    print(*[Fore.YELLOW + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
     
     if title == "PLAYER'S HAND":
         dealertotal, playertotal = calculateTotal([],cards)
-        print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n")
+        print(Fore.YELLOW + "Total: "+ Fore.GREEN +f"{playertotal}\n")
     else:
         dealertotal, playertotal = calculateTotal(cards,[])
-        print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
+        print(Fore.YELLOW + "Total: "+ Fore.GREEN +f"{dealertotal}")
 
 
 #Prints dealer cards before player stands
@@ -50,7 +50,7 @@ def hiddenCardsToString(dealerCards):
 |~~~~~~~~~~|
 `----------'"""
     strings = [dealerCards[0].cardImage, hiddenCard]
-    print(*[Fore.YELLOW + Style.BRIGHT + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + Style.BRIGHT + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
+    print(*[Fore.YELLOW + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
    
 def calculateTotal(dealerCards, playerCards):
     dealertotal = 0
@@ -74,62 +74,67 @@ def calculateTotal(dealerCards, playerCards):
         playeraces -= 1
     return dealertotal, playertotal
 
-def checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds):
+def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
-        playerfunds -= bet
-        dealerfunds += bet
+        playerbalance -= bet
+        dealerbalance += bet
     elif playertotal == 21 and dealertotal != 21:
         print (Fore.GREEN + Style.BRIGHT+"Blackjack! You win")
-        playerfunds += bet
-        dealerfunds -= bet
+        playerbalance += bet
+        dealerbalance -= bet
     elif dealertotal > 21:
         print (Fore.GREEN + Style.BRIGHT+"You win!")
-        playerfunds += bet
-        dealerfunds -= bet
+        playerbalance += bet
+        dealerbalance -= bet
     elif playertotal == dealertotal:
         print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
     elif playertotal > dealertotal:
         print(Fore.GREEN + Style.BRIGHT+"You win!")
-        playerfunds += bet
-        dealerfunds -= bet
+        playerbalance += bet
+        dealerbalance -= bet
     elif playertotal < dealertotal:
         print(Fore.RED + Style.BRIGHT+"You lose!")
-        playerfunds -= bet
-        dealerfunds += bet
-    return playerfunds, dealerfunds   
-
+        playerbalance -= bet
+        dealerbalance += bet
+    return playerbalance, dealerbalance   
+def printBalance():
+    print(Fore.YELLOW + f"Bet:"+ Fore.GREEN +f"{bet}$"+Fore.YELLOW +"   Player's funds:"+ Fore.GREEN +f"{playerbalance}$"+Fore.YELLOW +"    Dealer's funds:"+ Fore.GREEN +f"{dealerbalance}$\n")
 
 #MAIN
 
 titles.printTitle() #Prints intro sequence
 while True:
-    #TODO: Find code to take command as Key press down instead of enter
     #Menu
     os.system('cls')
     titles.firstMenu()
     
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
-    playerfunds = 50
-    dealerfunds = 50
-    if command == "1":#(Play)
-        #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
-        #and dealer wins if player deposit == 0. Make minimun bet for each round. Implement double and surrender
-        #TODO: Fix commands during game
-        #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
-        #FIXME: When inputting wrong command funds reset
 
+    #Game always starts with 50 in balance
+    playerbalance = 50
+    dealerbalance = 50
+    if command == "1":#(Play)
+
+        #TODO: Find code to take command as Key press down instead of enter
+        #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
+        #and dealer wins if player deposit == 0. 
+        #TODO: implement 3:2 winnings rule for blackjack
+        #TODO: Implement double 
+        #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
+        #TODO: Check if need to add time.sleep to more places for better flow
 
         while command != "q":
             os.system('cls')
-            print(f"Player's funds:{playerfunds}$    Dealer's funds:{dealerfunds}$")
-            #TODO: Change text so it doesnt print minimum twice when wrong input
+            print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
             while True:
                 try:
-                    bet = int(input(Fore.YELLOW + "Minimum bet is 1$.\nHow much do you want to bet?\n"))
-                    if bet < 1 or bet > playerfunds:
-                        print("Minimum bet is 1$. Cannot bet more than available funds.")
-                    
+                    print(Fore.YELLOW + "         How much do you want to bet?")
+                    bet = int(input(Fore.GREEN +"         "))
+                    if bet < 1:
+                        print("Minimum bet is 1$.")
+                    elif bet > playerbalance:
+                        print("Cannot bet more than available funds.")
                     else:
                         break
                 except ValueError:
@@ -141,7 +146,7 @@ while True:
             playerCards = []
             dealerCards = []
 
-            #First hand
+            #Deals first hand
             playerCards = dealcard(playerCards, dealerCards, deck, playerCards) 
             playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
@@ -149,38 +154,39 @@ while True:
 
             #Prints the player's hand and the dealer's with a hidden card and the commands menu
             os.system('cls')
-            print(Fore.YELLOW + Style.BRIGHT+f"Bet:{bet}$   Player's funds:{playerfunds}$    Dealer's funds:{dealerfunds}$\n")
+            printBalance()
             cardsToString(playerCards, "PLAYER'S HAND")
             time.sleep(0.5)
             hiddenCardsToString(dealerCards)
             time.sleep(0.5)
             titles.gameMenu()
         
-            #TODO: print funds after hitting or standing
             #Blackjack game commands   
             while True:
-                command = input(Fore.YELLOW + Style.BRIGHT +"Command:")
+                command = input(Fore.YELLOW +"Command:")
                 
                 #Check if anyone has blackjack from the start
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                 if playertotal > 21 or dealertotal > 21:
+                    printBalance()
                     cardsToString(playerCards, "PLAYER'S HAND")
                     hiddenCardsToString(dealerCards)
-                    playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
+                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                     time.sleep(4)
                     break
 
-                #TODO: Check if need to add time.sleep to more places for better flow
+
                 elif command == "w": #(hit)" NYI
                     os.system('cls')
                     playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+                    printBalance()
                     cardsToString(playerCards, "PLAYER'S HAND")
                     hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     #Calculate total
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     if playertotal >= 21:
-                        playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
+                        playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                         time.sleep(4)
                         break
                     else:
@@ -189,6 +195,7 @@ while True:
                 elif command == "s":#(stand):
                     os.system('cls')
                     #Shows dealers hidden card
+                    printBalance()
                     cardsToString(playerCards, "PLAYER'S HAND")
                     cardsToString(dealerCards, "DEALER'S HAND")
 
@@ -197,12 +204,13 @@ while True:
                     while dealertotal < 17:
                         dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                         os.system('cls')
+                        printBalance()
                         cardsToString(playerCards, "PLAYER'S HAND")
                         cardsToString(dealerCards, "DEALER'S HAND")
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     titles.gameMenu()
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
+                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                     
                     time.sleep(4)
                     break
@@ -218,7 +226,6 @@ while True:
 
                 else:
                     os.system('cls')
-                    #Shows dealers hidden card
                     cardsToString(playerCards, "PLAYER'S HAND")
                     hiddenCardsToString(dealerCards)
                     titles.gameMenu()
