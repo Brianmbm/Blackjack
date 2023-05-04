@@ -31,7 +31,7 @@ def cardsToString(cards, title):
     
     if title == "PLAYER'S HAND":
         dealertotal, playertotal = calculateTotal([],cards)
-        print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n\n")
+        print(Fore.YELLOW + Style.BRIGHT + f"Total: {playertotal}\n")
     else:
         dealertotal, playertotal = calculateTotal(cards,[])
         print(Fore.YELLOW + Style.BRIGHT + f"Total: {dealertotal}")
@@ -74,19 +74,30 @@ def calculateTotal(dealerCards, playerCards):
         playeraces -= 1
     return dealertotal, playertotal
 
-def checkWinner (dealertotal, playertotal):
+def checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
+        playerfunds -= bet
+        dealerfunds += bet
     elif playertotal == 21 and dealertotal != 21:
         print (Fore.GREEN + Style.BRIGHT+"Blackjack! You win")
+        playerfunds += bet
+        dealerfunds -= bet
     elif dealertotal > 21:
         print (Fore.GREEN + Style.BRIGHT+"You win!")
+        playerfunds += bet
+        dealerfunds -= bet
     elif playertotal == dealertotal:
         print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
+        playerfunds -= bet
+        dealerfunds += bet
     elif playertotal > dealertotal:
         print(Fore.GREEN + Style.BRIGHT+"You win!")
+        playerfunds += bet
+        dealerfunds -= bet
     elif playertotal < dealertotal:
         print(Fore.RED + Style.BRIGHT+"You lose!")
+    return playerfunds, dealerfunds   
 
 
 #MAIN
@@ -99,15 +110,31 @@ while True:
     titles.firstMenu()
     
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
-    
+    playerfunds = 50
+    dealerfunds = 50
     if command == "1":#(Play)
         #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
         #and dealer wins if player deposit == 0. Make minimun bet for each round. Implement double and surrender
         #TODO: Fix commands during game
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
-        
+        #FIXME: When inputting wrong command funds reset
+
+
         while command != "q":
             os.system('cls')
+            print(f"Player's funds:{playerfunds}$    Dealer's funds:{dealerfunds}$")
+            
+            while True:
+                try:
+                    bet = int(input(Fore.YELLOW + "Minimum bet is 1$.\nHow much do you want to bet?\n"))
+                    if bet < 1 or bet > playerfunds:
+                        print("Minimum bet is 1$. Cannot bet more than available funds.")
+                    
+                    else:
+                        break
+                except ValueError:
+                    print(Fore.RED + Style.BRIGHT + "Invalid input! Please enter a valid number.")
+
             #Initialize deck for the round
             deck = cards.CardDeck()
         
@@ -121,13 +148,13 @@ while True:
             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
 
             #Prints the player's hand and the dealer's with a hidden card and the commands menu
+            os.system('cls')
+            print(Fore.YELLOW + Style.BRIGHT+f"Bet:{bet}$   Player's funds:{playerfunds}$    Dealer's funds:{dealerfunds}$\n")
             cardsToString(playerCards, "PLAYER'S HAND")
-            time.sleep(1)
+            time.sleep(0.5)
             hiddenCardsToString(dealerCards)
             time.sleep(0.5)
             titles.gameMenu()
-
-            #TODO: If anyone has blackjack need to stop game
         
 
             #Blackjack game commands   
@@ -139,10 +166,10 @@ while True:
                 if playertotal > 21 or dealertotal > 21:
                     cardsToString(playerCards, "PLAYER'S HAND")
                     hiddenCardsToString(dealerCards)
-                    checkWinner (dealertotal, playertotal)
+                    playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
                     time.sleep(4)
                     break
-                #TODO: show dealer cards if player loses
+
                 #TODO: Check if need to add time.sleep to more places for better flow
                 elif command == "w": #(hit)" NYI
                     os.system('cls')
@@ -153,7 +180,7 @@ while True:
                     #Calculate total
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     if playertotal >= 21:
-                        checkWinner (dealertotal, playertotal)
+                        playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
                         time.sleep(4)
                         break
                     else:
@@ -175,7 +202,7 @@ while True:
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                     titles.gameMenu()
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    checkWinner (dealertotal, playertotal)
+                    playerfunds, dealerfunds = checkWinner (dealertotal, playertotal, bet, playerfunds, dealerfunds)
                     
                     time.sleep(4)
                     break
@@ -192,7 +219,7 @@ while True:
                 else:
                     os.system('cls')
                     #Shows dealers hidden card
-                    playerCardsToString(playerCards)
+                    cardsToString(playerCards, "PLAYER'S HAND")
                     hiddenCardsToString(dealerCards)
                     titles.gameMenu()
                     print(Fore.RED+"invalid command")
