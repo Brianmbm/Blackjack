@@ -119,119 +119,98 @@ while True:
     if command == "1":#(Play)
 
         #TODO: Find code to take command as Key press down instead of enter
-        #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
-        #and dealer wins if player deposit == 0. 
+        #TODO: Fix print statement when game over/game won
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
         #TODO: refactor hit/stand code, repeats in double?
-
+        
         while command != "q":
             os.system('cls')
-            print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
-            while True:
-                try:
-                    print(Fore.YELLOW + "         How much do you want to bet?")
-                    bet = int(input(Fore.GREEN +"         "))
-                    if bet < 1:
-                        print("Minimum bet is 1$.")
-                    elif bet > playerbalance:
-                        print("Cannot bet more than available funds.")
-                    else:
-                        break
-                except ValueError:
-                    print(Fore.RED + Style.BRIGHT + "Invalid input! Please enter a valid number.")
-
-            #Initialize deck for the round
-            deck = cards.CardDeck()
-        
-            playerCards = []
-            dealerCards = []
-
-            #Deals first hand
-            playerCards = dealcard(playerCards, dealerCards, deck, playerCards) 
-            playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
-            dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-            dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-
-            #Prints the player's hand and the dealer's with a hidden card and the commands menu
-            os.system('cls')
-            printBalance()
-            cardsToString(playerCards, playhand)
-            time.sleep(0.5)
-            hiddenCardsToString(dealerCards)
-            time.sleep(0.5)
-            titles.gameMenu()
-        
-            #Blackjack game commands   
-            while True:
-                command = input(Fore.YELLOW +"  Command:")
-                
-                #Check if anyone has blackjack from the start
-                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                if playertotal > 21 or dealertotal > 21:
-                    printBalance()
-                    cardsToString(playerCards, playhand)
-                    hiddenCardsToString(dealerCards)
-                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                    time.sleep(4)
+            if playerbalance <= 0 or dealerbalance <= 0:
+                if playerbalance <= 0:
+                    print("Game over")
+                    gameoverinput = input()
                     break
+                elif dealerbalance <= 0:
+                    print("You won")
+                    gameoverinput = input()
+                    break
+            else:
+                print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
+                while True:
+                    try:
+                        print(Fore.YELLOW + "         How much do you want to bet?")
+                        bet = int(input(Fore.GREEN +"         "))
+                        if bet < 1:
+                            print("Minimum bet is 1$.")
+                        elif bet > playerbalance:
+                            print("Cannot bet more than available funds.")
+                        else:
+                            break
+                    except ValueError:
+                        print(Fore.RED + Style.BRIGHT + "Invalid input! Please enter a valid number.")
 
+                #Initialize deck for the round
+                deck = cards.CardDeck()
+        
+                playerCards = []
+                dealerCards = []
 
-                elif command == "w": #(hit)" NYI
-                    os.system('cls')
-                    playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
-                    printBalance()
-                    cardsToString(playerCards, playhand)
-                    hiddenCardsToString(dealerCards)
-                    titles.gameMenu()
-                    #Calculate total
+                #Deals first hand
+                playerCards = dealcard(playerCards, dealerCards, deck, playerCards) 
+                playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+                dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+                dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+
+                #Prints the player's hand and the dealer's with a hidden card and the commands menu
+                os.system('cls')
+                printBalance()
+                cardsToString(playerCards, playhand)
+                time.sleep(0.5)
+                hiddenCardsToString(dealerCards)
+                time.sleep(0.5)
+                titles.gameMenu()
+        
+                #Blackjack game commands   
+                while True:
+                    command = input(Fore.YELLOW +"  Command:")
+                
+                    #Check if anyone has blackjack from the start
                     dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    if playertotal >= 21:
+                    if playertotal > 21 or dealertotal > 21:
+                        printBalance()
+                        cardsToString(playerCards, playhand)
+                        hiddenCardsToString(dealerCards)
                         playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                         time.sleep(4)
                         break
-                    else:
-                        continue
 
-                elif command == "s":#(stand):
-                    os.system('cls')
-                    #Shows dealers hidden card
-                    printBalance()
-                    cardsToString(playerCards, playhand)
-                    cardsToString(dealerCards, dealhand)
 
-                    #If dealer points less than 17, dealer takes card
-                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    while dealertotal < 17:
-                        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-                        time.sleep(0.5)
+                    elif command == "w": #(hit)" NYI
                         os.system('cls')
+                        playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+                        printBalance()
+                        cardsToString(playerCards, playhand)
+                        hiddenCardsToString(dealerCards)
+                        titles.gameMenu()
+                        #Calculate total
+                        dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                        if playertotal >= 21:
+                            playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                            time.sleep(4)
+                            break
+                        else:
+                            continue
+
+                    elif command == "s":#(stand):
+                        os.system('cls')
+                        #Shows dealers hidden card
                         printBalance()
                         cardsToString(playerCards, playhand)
                         cardsToString(dealerCards, dealhand)
+
+                        #If dealer points less than 17, dealer takes card
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                        
-                    titles.gameMenu()
-                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                    
-                    time.sleep(4)
-                    break
-                #TODO: cannot double if bet*2 is more than player balance
-                elif command == "d": #double":#NYI: Double the wager, take exactly one more card, and then stand.
-                    os.system('cls')
-                    bet = bet*2
-                    playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
-                    cardsToString(playerCards, playhand)
-                    hiddenCardsToString(dealerCards)
-                    titles.gameMenu()
-                    time.sleep(0.5)
-                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    if playertotal >= 21:
-                        playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                        time.sleep(4)
-                        break
-                    else:
                         while dealertotal < 17:
                             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                             time.sleep(0.5)
@@ -247,19 +226,49 @@ while True:
                     
                         time.sleep(4)
                         break
+                    #TODO: cannot double if bet*2 is more than player balance
+                    elif command == "d": #double":#NYI: Double the wager, take exactly one more card, and then stand.
+                        os.system('cls')
+                        bet = bet*2
+                        playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+                        cardsToString(playerCards, playhand)
+                        hiddenCardsToString(dealerCards)
+                        titles.gameMenu()
+                        time.sleep(0.5)
+                        dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                        if playertotal >= 21:
+                            playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                            time.sleep(4)
+                            break
+                        else:
+                            while dealertotal < 17:
+                                dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+                                time.sleep(0.5)
+                                os.system('cls')
+                                printBalance()
+                                cardsToString(playerCards, playhand)
+                                cardsToString(dealerCards, dealhand)
+                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                        
+                            titles.gameMenu()
+                            dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                            playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                    
+                            time.sleep(4)
+                            break
 
-                elif command == "save":#NYI
-                    ()
+                    elif command == "save":#NYI
+                        ()
 
-                elif command == "q":#(quit):
-                    break
+                    elif command == "q":#(quit):
+                        break
 
-                else:
-                    os.system('cls')
-                    cardsToString(playerCards, playhand)
-                    hiddenCardsToString(dealerCards)
-                    titles.gameMenu()
-                    print(Fore.RED+"invalid command")
+                    else:
+                        os.system('cls')
+                        cardsToString(playerCards, playhand)
+                        hiddenCardsToString(dealerCards)
+                        titles.gameMenu()
+                        print(Fore.RED+"invalid command")
 
     elif command == "2":#NYI (Load)
         ()
