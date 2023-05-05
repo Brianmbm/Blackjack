@@ -81,8 +81,9 @@ def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
         dealerbalance += bet
     elif playertotal == 21 and dealertotal != 21:
         print (Fore.GREEN + Style.BRIGHT+"Blackjack! You win")
-        playerbalance += bet
-        dealerbalance -= bet
+        winnings = bet * 3/2+bet
+        playerbalance += winnings
+        dealerbalance -= winnings
     elif dealertotal > 21:
         print (Fore.GREEN + Style.BRIGHT+"You win!")
         playerbalance += bet
@@ -120,7 +121,6 @@ while True:
         #TODO: Find code to take command as Key press down instead of enter
         #TODO: Need to make var for player deposit/dealer deposit so player wins if dealer deposit == 0 
         #and dealer wins if player deposit == 0. 
-        #TODO: implement 3:2 winnings rule for blackjack
         #TODO: Implement double 
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
