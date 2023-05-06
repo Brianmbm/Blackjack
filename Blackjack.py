@@ -123,8 +123,8 @@ while True:
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
         #TODO: refactor hit/stand code, repeats in double?
-        #FIXME: dealer stops pulling cards after 17 if not busted but not won?
         #TODO: wait for input before next round instead of sleep.time?
+        #TODO: refactor dealerturn 
         
         while command != "q":
             os.system('cls')
@@ -197,7 +197,21 @@ while True:
                         titles.gameMenu()
                         #Calculate total
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                        if playertotal >= 21:
+                        if playertotal > 21:
+                            playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                            time.sleep(4)
+                            break
+                        elif playertotal == 21:
+                            while dealertotal < 17 or dealertotal < playertotal:
+                                dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+                                time.sleep(0.5)
+                                os.system('cls')
+                                printBalance()
+                                cardsToString(playerCards, playhand)
+                                cardsToString(dealerCards, dealhand)
+                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                            titles.gameMenu()
+                            dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                             playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                             time.sleep(4)
                             break
@@ -213,7 +227,7 @@ while True:
 
                         #If dealer points less than 17, dealer takes card
                         dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                        while dealertotal < 17:
+                        while dealertotal < 17 or dealertotal < playertotal:
                             dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                             time.sleep(0.5)
                             os.system('cls')
