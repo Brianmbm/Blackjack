@@ -173,22 +173,22 @@ while True:
                 time.sleep(0.5)
                 titles.gameMenu()
         
+                #Check if anyone has blackjack from the start
+                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                if playertotal == 21 or dealertotal == 21:
+                    os.system('cls')
+                    printBalance()
+                    cardsToString(playerCards, playhand)
+                    cardsToString(dealerCards, dealhand)
+                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                    time.sleep(4)
+                    break
+
                 #Blackjack game commands   
                 while True:
                     command = input(Fore.YELLOW +"  Command:")
-                
-                    #Check if anyone has blackjack from the start
-                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                    if playertotal > 21 or dealertotal > 21:
-                        printBalance()
-                        cardsToString(playerCards, playhand)
-                        hiddenCardsToString(dealerCards)
-                        playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                        time.sleep(4)
-                        break
 
-
-                    elif command == "w": #(hit)" NYI
+                    if command == "w": #(hit)" NYI
                         os.system('cls')
                         playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                         printBalance()
