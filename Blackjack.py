@@ -139,10 +139,12 @@ while True:
 
     if command == "1":#(Play)
 
-        #TODO: Find code to take command as Key press down instead of enter
-        #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
-        #TODO: Check if need to add time.sleep to more places for better flow
-        #TODO: wait for input before next round instead of sleep.time?
+        #TODO: Find code to take command as Key press down instead of enter. 
+        #keyboard module an option, but refreshes too much, makes game glitchy
+
+        #TODO: low prio. card strings become scrambled if console size becomes smaller
+        # than the size/amount of cards displayed. Check for module to start terminal at specific size?
+
         #TODO: should not be able to bet more than dealer has
         #TODO: cannot double if bet*2 is more than player balance
         #TODO: add rules about bets once deposit implemented
