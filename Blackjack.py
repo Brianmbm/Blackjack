@@ -37,7 +37,7 @@ def cardsToString(cards, title):
         print(Fore.YELLOW + "  Total: "+ Fore.GREEN +f"{dealertotal}")
 
 
-#Prints dealer cards before player stands
+#Hide one dealer card before player stands
 def hiddenCardsToString(dealerCards):
     print(Fore.RED + Style.BRIGHT + "  DEALER'S HAND")
     print (Fore.RED + Style.BRIGHT + "  ==============")
@@ -51,7 +51,8 @@ def hiddenCardsToString(dealerCards):
 `----------'"""
     strings = [dealerCards[0].cardImage, hiddenCard]
     print(*[Fore.YELLOW + '   '.join(x) if i > 0 else '   ' + Fore.YELLOW + '   '.join(x) for i, x in enumerate(zip(*[[x.ljust(len(max(s.split('\n'), key=len))) for x in s.split('\n')] for s in strings]))], sep='\n   ')
-   
+
+#Calculate value of all cards
 def calculateTotal(dealerCards, playerCards):
     dealertotal = 0
     dealeraces = 0
@@ -74,6 +75,7 @@ def calculateTotal(dealerCards, playerCards):
         playeraces -= 1
     return dealertotal, playertotal
 
+#Checks winner, prints statement, then changes balance
 def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
     if playertotal > 21:
         print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
@@ -98,13 +100,29 @@ def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
         print(Fore.RED + Style.BRIGHT+"You lose!")
         playerbalance -= bet
         dealerbalance += bet
+    waitforresponse = input("Press enter to continue")
     return playerbalance, dealerbalance  
-def dealerTurn():
-    ()
 def printBalance():
     print(Fore.YELLOW + f"  Bet:"+ Fore.GREEN +f"{bet}$"+Fore.YELLOW +"   Player's funds:"+ Fore.GREEN +f"{playerbalance}$"+Fore.YELLOW +"    Dealer's funds:"+ Fore.GREEN +f"{dealerbalance}$\n")
 playhand = "  PLAYER'S HAND"
 dealhand = "  DEALER'S HAND"
+
+def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand):
+    dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
+    while dealertotal < 17 or dealertotal < playertotal:
+        dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
+        time.sleep(0.5)
+        os.system('cls')
+        printBalance()
+        cardsToString(playerCards, playhand)
+        cardsToString(dealerCards, dealhand)
+        dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
+    
+    titles.gameMenu()
+    dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
+    playerbalance, dealerbalance = checkWinner(dealertotal, playertotal, bet, playerbalance, dealerbalance)
+    return playerbalance, dealerbalance
+
 #MAIN
 
 titles.printTitle() #Prints intro sequence
@@ -115,19 +133,18 @@ while True:
     
     command = input(Fore.YELLOW + "          Type number + enter:\n          ")
 
-    #Game always starts with 50 in balance
+    #Game always starts with för player 50 and 100 for dealer in balance
     playerbalance = 50
-    dealerbalance = 50
+    dealerbalance = 100
+
     if command == "1":#(Play)
 
         #TODO: Find code to take command as Key press down instead of enter
-        #TODO: Fix print statement when game over/game won
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
         #TODO: refactor hit/stand code, repeats in double?
         #TODO: wait for input before next round instead of sleep.time?
         #TODO: refactor dealerturn 
-        #FIXME blacjack on first rounds jumps out of loop
         
         while command != "q":
             os.system('cls')
@@ -157,7 +174,6 @@ while True:
 
                 #Initialize deck for the round
                 deck = cards.CardDeck()
-        
                 playerCards = []
                 dealerCards = []
 
@@ -188,7 +204,6 @@ while True:
                         cardsToString(playerCards, playhand)
                         cardsToString(dealerCards, dealhand)
                         playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                        time.sleep(4)
                         break
                     
                     else:
@@ -205,21 +220,9 @@ while True:
                             dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                             if playertotal > 21:
                                 playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                                time.sleep(4)
                                 break
                             elif playertotal == 21:
-                                while dealertotal < 17 or dealertotal < playertotal:
-                                    dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-                                    time.sleep(0.5)
-                                    os.system('cls')
-                                    printBalance()
-                                    cardsToString(playerCards, playhand)
-                                    cardsToString(dealerCards, dealhand)
-                                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                                titles.gameMenu()
-                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                                playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                                time.sleep(4)
+                                playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                                 break
                             else:
                                 continue
@@ -230,24 +233,10 @@ while True:
                             printBalance()
                             cardsToString(playerCards, playhand)
                             cardsToString(dealerCards, dealhand)
-
                             #If dealer points less than 17, dealer takes card
-                            dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                            while dealertotal < 17 or dealertotal < playertotal:
-                                dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-                                time.sleep(0.5)
-                                os.system('cls')
-                                printBalance()
-                                cardsToString(playerCards, playhand)
-                                cardsToString(dealerCards, dealhand)
-                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                        
-                            titles.gameMenu()
-                            dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                            playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                    
-                            time.sleep(4)
+                            playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                             break
+
                         #TODO: cannot double if bet*2 is more than player balance
                         elif command == "d": #double":#NYI: Double the wager, take exactly one more card, and then stand.
                             os.system('cls')
@@ -260,23 +249,9 @@ while True:
                             dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
                             if playertotal >= 21:
                                 playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                                time.sleep(4)
                                 break
                             else:
-                                while dealertotal < 17:
-                                    dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
-                                    time.sleep(0.5)
-                                    os.system('cls')
-                                    printBalance()
-                                    cardsToString(playerCards, playhand)
-                                    cardsToString(dealerCards, dealhand)
-                                    dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                        
-                                titles.gameMenu()
-                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                                playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                    
-                                time.sleep(4)
+                                playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                                 break
 
                         elif command == "save":#NYI
