@@ -142,9 +142,10 @@ while True:
         #TODO: Find code to take command as Key press down instead of enter
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
-        #TODO: refactor hit/stand code, repeats in double?
         #TODO: wait for input before next round instead of sleep.time?
-        #TODO: refactor dealerturn 
+        #TODO: should not be able to bet more than dealer has
+        #TODO: cannot double if bet*2 is more than player balance
+        #TODO: add rules about bets once deposit implemented
         
         while command != "q":
             os.system('cls')
@@ -164,9 +165,9 @@ while True:
                         print(Fore.YELLOW + "         How much do you want to bet?")
                         bet = int(input(Fore.GREEN +"         "))
                         if bet < 1:
-                            print("Minimum bet is 1$.")
+                            print(Fore.RED +"         Minimum bet is 1$.")
                         elif bet > playerbalance:
-                            print("Cannot bet more than available funds.")
+                            print(Fore.RED +"         Cannot bet more than available funds.")
                         else:
                             break
                     except ValueError:
@@ -237,8 +238,8 @@ while True:
                             playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                             break
 
-                        #TODO: cannot double if bet*2 is more than player balance
-                        elif command == "d": #double":#NYI: Double the wager, take exactly one more card, and then stand.
+                        #double":#NYI: Double the wager, take exactly one more card, and then stand.
+                        elif command == "d": 
                             os.system('cls')
                             bet = bet*2
                             playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
@@ -269,8 +270,7 @@ while True:
 
     elif command == "2":#NYI (Load)
         ()
-    #TODO: shorten rules or create two pages
-    #TODO: add rules about bets once deposit implemented
+
     elif command == "3":#NYI (Rules)
        os.system('cls')
        titles.gameRules() 
