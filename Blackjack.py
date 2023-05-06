@@ -123,16 +123,18 @@ while True:
         #FIXME: low prio. card strings become scrambled if console size becomes smaller than the size/amount of cards displayed
         #TODO: Check if need to add time.sleep to more places for better flow
         #TODO: refactor hit/stand code, repeats in double?
+        #FIXME: dealer stops pulling cards after 17 if not busted but not won?
+        #TODO: wait for input before next round instead of sleep.time?
         
         while command != "q":
             os.system('cls')
             if playerbalance <= 0 or dealerbalance <= 0:
                 if playerbalance <= 0:
-                    print("Game over")
+                    print(titles.gameover)
                     gameoverinput = input()
                     break
                 elif dealerbalance <= 0:
-                    print("You won")
+                    print(titles.youwin)
                     gameoverinput = input()
                     break
             else:
