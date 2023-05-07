@@ -107,6 +107,7 @@ def printBalance():
 playhand = "  PLAYER'S HAND"
 dealhand = "  DEALER'S HAND"
 
+#Dealer pulls card as long as dealer's total less than 17 or less than player
 def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand):
     dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
     while dealertotal < 17 or dealertotal < playertotal:
@@ -129,8 +130,9 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
   #TODO: low prio. card strings become scrambled if console size becomes smaller
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
   #TODO: should not be able to bet more than dealer has
-  #TODO: cannot double if bet*2 is more than player balance
-  #TODO: add rules about bets once deposit implemented
+  #FIXME: cannot double if bet*2 is more than player balance
+  #TODO: move save function from ingame to where it asks for bet
+
 
 
 titles.printTitle() #Prints intro sequence
@@ -228,10 +230,7 @@ while True:
                 titles.gameMenu()
         
                 #Check if anyone has blackjack from the start
-                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                
-
-                #Blackjack game commands   
+                dealertotal, playertotal = calculateTotal (dealerCards, playerCards) 
                 while True:
                     if playertotal == 21 or dealertotal == 21:
                         os.system('cls')
@@ -240,7 +239,7 @@ while True:
                         cardsToString(dealerCards, dealhand)
                         playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                         break
-                    
+                   #Blackjack game commands  
                     else:
                         command = input(Fore.YELLOW +"  Command:")
 
@@ -268,7 +267,6 @@ while True:
                             printBalance()
                             cardsToString(playerCards, playhand)
                             cardsToString(dealerCards, dealhand)
-                            #If dealer points less than 17, dealer takes card
                             playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                             break
 
@@ -290,8 +288,13 @@ while True:
                                 break
 
                         elif command == "save":#NYI
-                            ()
-
+                            saveName = input("Enter a name for the save: ")
+                            filehand = open('saves.txt', 'a')
+                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance) + "\n")
+                            filehand.close()
+                            print("Game saved successfully.")
+                            time.sleep(2)
+                            break
                         elif command == "q":#(quit):
                             break
 
