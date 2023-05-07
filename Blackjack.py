@@ -14,7 +14,7 @@ colorama.init(autoreset=True)#Resets color for every string printed
 def dealcard(playerCards, dealerCards, deck, addtoHand):
     while True:
         index = random.randint(0, 51)
-        if deck.deck[index] not in playerCards or dealerCards:
+        if deck.deck[index] not in playerCards and deck.deck[index] not in dealerCards:
             addtoHand.append(deck.deck[index])
             break
     return addtoHand
@@ -137,14 +137,15 @@ while True:
     playerbalance = 50
     dealerbalance = 100
 
-    if command == "1":#(Play)
-
+    if command == "1" or command == "2":#(Play)
+        if command == "2":#NYI (Load)
+            pass
+        elif command == "1":#(Play)
+            pass    
         #TODO: Find code to take command as Key press down instead of enter. 
         #keyboard module an option, but refreshes too much, makes game glitchy
-
         #TODO: low prio. card strings become scrambled if console size becomes smaller
-        # than the size/amount of cards displayed. Check for module to start terminal at specific size?
-
+        # than the size/amount of cards displayed. Check for module to start terminal at specific size
         #TODO: should not be able to bet more than dealer has
         #TODO: cannot double if bet*2 is more than player balance
         #TODO: add rules about bets once deposit implemented
@@ -278,7 +279,10 @@ while True:
        titles.gameRules() 
        command = input()
     elif command == "4":#(Quit)
+        os.system('cls')
+        print("Bye")
         break
     else: 
-        print ("input correct command")
+        print (Fore.RED + "          command not found")
+        time.sleep(1)
 

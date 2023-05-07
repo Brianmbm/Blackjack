@@ -120,7 +120,7 @@ def firstMenu():
 	print(Fore.YELLOW + "     Commands:\n      1. Play\n       2. Load\n        3. Rules\n         4. Quit\n")
 
 def gameMenu():
-	print(Fore.YELLOW + "  w =hit       s = stand\n  d = double    q = quit")
+	print(Fore.YELLOW + "  w =hit       s = stand\n  d = double    q = back to main menu")
 
 def gameRules():
 	print("""Rules of Blackjack
@@ -129,9 +129,9 @@ def gameRules():
 The hand with the highest total wins as long as it doesn't exceed 21. 
 A hand with a higher total than 21 is said to bust.
 Cards 2 through 10 are worth their face value, and face cards (jack, queen, king) are also worth 10. 
-An ace's value is 11 unless this would cause the player to bust, in which case it is worth 1.
+An ace's value is 11 unless this would a bust, in which case it is worth 1.
 The goal of each player is to beat the dealer by having the higher, unbusted hand. 
-Note that if the player busts he loses, even if the dealer also busts (therefore Blackjack favors the dealer).
+If the player busts he loses, even if the dealer also busts.
 If both the player and the dealer have the same point value, neither win the hand.
 The dealer gives two cards to each player, including himself.
 One of the dealer's two cards is face-up, and the other is face down.
@@ -146,9 +146,9 @@ The player's options are:
  - Stand: Take no more cards.
  - Double down: Double the wager, take exactly one more card, and then stand.
 The player's turn is over after deciding to stand, doubling down to take a single card, or busting.
-If the player busts, he or she loses the bet even if the dealer goes on to bust.
-After the player has finished making his or her decisions, 
-the dealer then reveals his or her hidden hole card and plays the hand. 
-House rules say that the dealer must hit until he or she has at least 17, regardless of what the players have."""
+If the player busts, they lose the bet even if the dealer goes on to bust.
+When the player is done the dealer then reveals his or her hidden hole card and plays the hand. 
+House rules say that the dealer must hit until at least 17, regardless of what the player has.
+Blackjack has a 3:2 payout, the rest has a 1:1 payout on the bet."""
 )
-	print(Fore.RED + "\nPress enter to go back to menu.")
+	print(Fore.GREEN + "\nPress enter to go back to menu.")
