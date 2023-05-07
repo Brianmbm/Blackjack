@@ -10,7 +10,7 @@ from colorama import Fore, Back, Style
 
 colorama.init(autoreset=True)#Resets color for every string printed
 
-#Deal one card to player
+#Deal one card to player or dealer
 def dealcard(playerCards, dealerCards, deck, addtoHand):
     while True:
         index = random.randint(0, 51)
@@ -124,6 +124,14 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
     return playerbalance, dealerbalance
 
 #MAIN
+  #TODO: Find code to take command as Key press down instead of enter. 
+  #keyboard module an option, but refreshes too much, makes game glitchy
+  #TODO: low prio. card strings become scrambled if console size becomes smaller
+  # than the size/amount of cards displayed. Check for module to start terminal at specific size
+  #TODO: should not be able to bet more than dealer has
+  #TODO: cannot double if bet*2 is more than player balance
+  #TODO: add rules about bets once deposit implemented
+
 
 titles.printTitle() #Prints intro sequence
 while True:
@@ -137,19 +145,40 @@ while True:
     playerbalance = 50
     dealerbalance = 100
 
-    if command == "1" or command == "2":#(Play)
-        if command == "2":#NYI (Load)
-            pass
-        elif command == "1":#(Play)
-            pass    
-        #TODO: Find code to take command as Key press down instead of enter. 
-        #keyboard module an option, but refreshes too much, makes game glitchy
-        #TODO: low prio. card strings become scrambled if console size becomes smaller
-        # than the size/amount of cards displayed. Check for module to start terminal at specific size
-        #TODO: should not be able to bet more than dealer has
-        #TODO: cannot double if bet*2 is more than player balance
-        #TODO: add rules about bets once deposit implemented
+    if command == "1" or command == "2":
         
+        #(Load)
+        if command == "2":
+            fhand = open('saves.txt', 'r')
+            saves = fhand.read()
+            fhand.close()
+            saveline = saves.split('\n')
+            savename = []
+            playertotlist = []
+            dealertotlist = []
+            index = 0
+            os.system('cls')
+            print("\n\n\n\n\n")
+            for line in saveline:
+                nameandtotals = line.split(' ')
+                savename.append(nameandtotals[0])
+                playertotlist.append(int(nameandtotals[1]))
+                dealertotlist.append(int(nameandtotals[2]))
+                print(Fore.YELLOW + f"          {index+1}. {savename[index]} (Player: {playertotlist[index]}, Dealer: {dealertotlist[index]})")
+                index = index + 1
+            while True:
+                loadsave = input("          Write number and press enter:")
+                try:
+                    loadsave = int(loadsave)
+                    playerbalance = playertotlist[loadsave-1]
+                    dealerbalance = dealertotlist[loadsave-1]
+                    break
+                except:
+                    print(Fore.RED + "Invalid input! Please enter a valid number.")
+            
+        #(Play)
+        elif command == "1":
+            pass  
         while command != "q":
             os.system('cls')
             if playerbalance <= 0 or dealerbalance <= 0:
@@ -162,9 +191,9 @@ while True:
                     gameoverinput = input()
                     break
             else:
-                print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
                 while True:
                     try:
+                        print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
                         print(Fore.YELLOW + "         How much do you want to bet?")
                         bet = int(input(Fore.GREEN +"         "))
                         if bet < 1:
@@ -174,7 +203,9 @@ while True:
                         else:
                             break
                     except ValueError:
-                        print(Fore.RED + Style.BRIGHT + "Invalid input! Please enter a valid number.")
+                        print(Fore.RED + Style.BRIGHT + "         Invalid input! Please enter a valid number.")
+                        time.sleep(1)
+                        os.system('cls')
 
                 #Initialize deck for the round
                 deck = cards.CardDeck()
@@ -213,7 +244,7 @@ while True:
                     else:
                         command = input(Fore.YELLOW +"  Command:")
 
-                        if command == "w": #(hit)" NYI
+                        if command == "w": #hit
                             os.system('cls')
                             playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
                             printBalance()
@@ -231,7 +262,7 @@ while True:
                             else:
                                 continue
 
-                        elif command == "s":#(stand):
+                        elif command == "s":#stand:
                             os.system('cls')
                             #Shows dealers hidden card
                             printBalance()
@@ -241,8 +272,8 @@ while True:
                             playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                             break
 
-                        #double":#NYI: Double the wager, take exactly one more card, and then stand.
-                        elif command == "d": 
+                        
+                        elif command == "d":#double
                             os.system('cls')
                             bet = bet*2
                             playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
@@ -269,20 +300,17 @@ while True:
                             cardsToString(playerCards, playhand)
                             hiddenCardsToString(dealerCards)
                             titles.gameMenu()
-                            print(Fore.RED+"invalid command")
+                            print(Fore.RED+"Invalid command!")
 
-    elif command == "2":#NYI (Load)
-        ()
-
-    elif command == "3":#NYI (Rules)
-       os.system('cls')
-       titles.gameRules() 
-       command = input()
+    elif command == "3":#(Rules)
+        os.system('cls')
+        titles.gameRules() 
+        command = input()
     elif command == "4":#(Quit)
         os.system('cls')
         print("Bye")
         break
     else: 
-        print (Fore.RED + "          command not found")
+        print (Fore.RED + "          Invalid command!")
         time.sleep(1)
 
