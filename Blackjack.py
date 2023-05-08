@@ -213,13 +213,15 @@ while True:
                             os.system('cls')
                         #Save game
                         elif bet == 0:
-                            print(Fore.YELLOW + "         Save name (one word, no spaces): ")
+                            print(Fore.YELLOW + "         Save name: ")
                             saveName = input("         ")
+                            saveName = saveName.strip()
+                            saveName = saveName.replace(" ","_")
                             filehand = open('saves.txt', 'a')
                             filehand.write("\n")
                             filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
                             filehand.close()
-                            print("        Game saved successfully.")
+                            print("         Game saved successfully.")
                             time.sleep(2)
                             exitaftersave = True
                             break

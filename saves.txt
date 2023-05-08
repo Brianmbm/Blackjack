@@ -7,3 +7,4 @@ testnumber 30 120
 lastsavepls 40 110
 anothersavejustincase 80 70
 willthiswork 79 71
+try_save 50 100
