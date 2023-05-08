@@ -1,5 +1,9 @@
 testsave 70 80
-testsave2 30 120
+testsaved 30 120
 testsavefunction 50 100
-testgamefunction2 50 100
-testgamefunction3 30 120
+testgamefunc 50 100
+testgamefunct 30 120
+testnumber 30 120
+lastsavepls 40 110
+anothersavejustincase 80 70
+willthiswork 79 71

@@ -131,7 +131,7 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
   #TODO: should not be able to bet more than dealer has
   #FIXME: cannot double if bet*2 is more than player balance
-  #TODO: move save function from ingame to where it asks for bet
+  #TODO: fix text format for save function, fix so that you cant save more than a word
 
 
 
@@ -211,7 +211,8 @@ while True:
                         elif bet == 0:
                             saveName = input("Enter a name for the save: ")
                             filehand = open('saves.txt', 'a')
-                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance) + "\n")
+                            filehand.write("\n")
+                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
                             filehand.close()
                             print("Game saved successfully.")
                             time.sleep(2)
