@@ -1,2 +1,5 @@
 testsave 70 80
 testsave2 30 120
+testsavefunction 50 100
+testgamefunction2 50 100
+testgamefunction3 30 120

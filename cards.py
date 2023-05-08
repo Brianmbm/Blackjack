@@ -25,7 +25,8 @@ class CardDeck:
 
                 self.deck.append(Card(card_name, card_value, card_image))
 
-    #ChatGPT cheat-code below because I could not figure why i could not iterate through the whole deck to initialize it (to be fair, it was before we went through Python class/magic methods in-lesson)
+    #ChatGPT cheat-code below because I could not figure why i could not iterate through the whole deck to initialize it 
+    #(to be fair, it was before we went through Python class/magic methods in-lesson)
 
     def __iter__(self):
         self.current_index = 0

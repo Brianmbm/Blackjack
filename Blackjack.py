@@ -180,8 +180,10 @@ while True:
             
         #(Play)
         elif command == "1":
-            pass  
-        while command != "q":
+            pass 
+        exitaftersave = False
+        while command != "q" and exitaftersave == False:
+            
             os.system('cls')
             if playerbalance <= 0 or dealerbalance <= 0:
                 if playerbalance <= 0:
@@ -196,12 +198,26 @@ while True:
                 while True:
                     try:
                         print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
-                        print(Fore.YELLOW + "         How much do you want to bet?")
+                        print(Fore.YELLOW + "         How much do you want to bet? Write 0 to save and exit.")
                         bet = int(input(Fore.GREEN +"         "))
-                        if bet < 1:
+                        if bet < 0:
                             print(Fore.RED +"         Minimum bet is 1$.")
+                            time.sleep(1)
+                            os.system('cls')
                         elif bet > playerbalance:
                             print(Fore.RED +"         Cannot bet more than available funds.")
+                            time.sleep(1)
+                            os.system('cls')
+                        elif bet == 0:
+                            saveName = input("Enter a name for the save: ")
+                            filehand = open('saves.txt', 'a')
+                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance) + "\n")
+                            filehand.close()
+                            print("Game saved successfully.")
+                            time.sleep(2)
+                            exitaftersave = True
+                            break
+                            
                         else:
                             break
                     except ValueError:
@@ -220,18 +236,20 @@ while True:
                 dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
                 dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
 
+                
                 #Prints the player's hand and the dealer's with a hidden card and the commands menu
-                os.system('cls')
-                printBalance()
-                cardsToString(playerCards, playhand)
-                time.sleep(0.5)
-                hiddenCardsToString(dealerCards)
-                time.sleep(0.5)
-                titles.gameMenu()
+                if exitaftersave == False:
+                    os.system('cls')
+                    printBalance()
+                    cardsToString(playerCards, playhand)
+                    time.sleep(0.5)
+                    hiddenCardsToString(dealerCards)
+                    time.sleep(0.5)
+                    titles.gameMenu()
         
                 #Check if anyone has blackjack from the start
                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards) 
-                while True:
+                while True and exitaftersave == False:
                     if playertotal == 21 or dealertotal == 21:
                         os.system('cls')
                         printBalance()
@@ -286,15 +304,6 @@ while True:
                             else:
                                 playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
                                 break
-
-                        elif command == "save":#NYI
-                            saveName = input("Enter a name for the save: ")
-                            filehand = open('saves.txt', 'a')
-                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance) + "\n")
-                            filehand.close()
-                            print("Game saved successfully.")
-                            time.sleep(2)
-                            break
                         elif command == "q":#(quit):
                             break
 
