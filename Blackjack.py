@@ -78,29 +78,29 @@ def calculateTotal(dealerCards, playerCards):
 #Checks winner, prints statement, then changes balance
 def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
     if playertotal > 21:
-        print(Fore.RED + Style.BRIGHT+"Bust! Dealer wins.")
+        print(Fore.RED + Style.BRIGHT+"  Bust! Dealer wins.")
         playerbalance -= bet
         dealerbalance += bet
     elif playertotal == 21 and dealertotal != 21:
-        print (Fore.GREEN + Style.BRIGHT+"Blackjack! You win")
-        winnings = bet * 3/2+bet
+        print (Fore.GREEN + Style.BRIGHT+"  Blackjack! You win")
+        winnings = bet * 3/2
         playerbalance += winnings
         dealerbalance -= winnings
     elif dealertotal > 21:
-        print (Fore.GREEN + Style.BRIGHT+"You win!")
+        print (Fore.GREEN + Style.BRIGHT+"  You win!")
         playerbalance += bet
         dealerbalance -= bet
     elif playertotal == dealertotal:
-        print(Fore.RED + Style.BRIGHT+"Push, nobody wins")
+        print(Fore.RED + Style.BRIGHT+"  Push, nobody wins")
     elif playertotal > dealertotal:
-        print(Fore.GREEN + Style.BRIGHT+"You win!")
+        print(Fore.GREEN + Style.BRIGHT+"  You win!")
         playerbalance += bet
         dealerbalance -= bet
     elif playertotal < dealertotal:
-        print(Fore.RED + Style.BRIGHT+"You lose!")
+        print(Fore.RED + Style.BRIGHT+"  You lose!")
         playerbalance -= bet
         dealerbalance += bet
-    waitforresponse = input("Press enter to continue")
+    waitforresponse = input("  Press enter to continue")
     return playerbalance, dealerbalance  
 def printBalance():
     print(Fore.YELLOW + f"  Bet:"+ Fore.GREEN +f"{bet}$"+Fore.YELLOW +"   Player's funds:"+ Fore.GREEN +f"{playerbalance}$"+Fore.YELLOW +"    Dealer's funds:"+ Fore.GREEN +f"{dealerbalance}$\n")
@@ -131,7 +131,8 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
   #TODO: should not be able to bet more than dealer has
   #FIXME: cannot double if bet*2 is more than player balance
-  #TODO: fix text format for save function, fix so that you cant save more than a word
+  #TODO: fix so that you cant save more than a word
+  #TODO: refactor load and save functions
 
 
 
@@ -185,6 +186,7 @@ while True:
         while command != "q" and exitaftersave == False:
             
             os.system('cls')
+            #Game over
             if playerbalance <= 0 or dealerbalance <= 0:
                 if playerbalance <= 0:
                     print(titles.gameover)
@@ -197,6 +199,7 @@ while True:
             else:
                 while True:
                     try:
+                        #Bet 
                         print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
                         print(Fore.YELLOW + "         How much do you want to bet? Write 0 to save and exit.")
                         bet = int(input(Fore.GREEN +"         "))
@@ -208,13 +211,15 @@ while True:
                             print(Fore.RED +"         Cannot bet more than available funds.")
                             time.sleep(1)
                             os.system('cls')
+                        #Save game
                         elif bet == 0:
-                            saveName = input("Enter a name for the save: ")
+                            print(Fore.YELLOW + "         Save name (one word, no spaces): ")
+                            saveName = input("         ")
                             filehand = open('saves.txt', 'a')
                             filehand.write("\n")
                             filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
                             filehand.close()
-                            print("Game saved successfully.")
+                            print("        Game saved successfully.")
                             time.sleep(2)
                             exitaftersave = True
                             break
@@ -310,10 +315,11 @@ while True:
 
                         else:
                             os.system('cls')
+                            printBalance()
                             cardsToString(playerCards, playhand)
                             hiddenCardsToString(dealerCards)
                             titles.gameMenu()
-                            print(Fore.RED+"Invalid command!")
+                            print(Fore.RED+"  Invalid command!")
 
     elif command == "3":#(Rules)
         os.system('cls')
