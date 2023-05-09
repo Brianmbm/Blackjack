@@ -12,3 +12,6 @@ refactoredsave 80 70
 refactoredtest2 20 130
 testtest 20 130
 testtest2 50 100
+testsaverefactor 50 100
+trysave 59 91
+trysaveagain 40 110

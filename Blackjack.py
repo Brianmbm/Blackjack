@@ -164,14 +164,45 @@ def saveGame(playerbalance, dealerbalance):
         time.sleep(2)
         exitaftersave = True
         return exitaftersave
+def checkBet():
+    wantsave = False
+    while True:
+        try:
+            #Bet 
+            print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
+            print(Fore.YELLOW + "         How much do you want to bet? Write 0 to save and exit.")
+            bet = int(input(Fore.GREEN +"         "))
+            if bet < 0:
+                print(Fore.RED +"         Minimum bet is 1$.")
+                time.sleep(1)
+                os.system('cls')
+            elif bet > playerbalance:
+                print(Fore.RED +"         Cannot bet more than available funds.")
+                time.sleep(1)
+                os.system('cls')
+            elif bet > dealerbalance:
+                print(Fore.RED +"         Cannot bet more than dealer's available funds.")
+                time.sleep(1.5)
+                os.system('cls')
+            elif bet == 0:
+                wantsave = True
+                break
+            else:
+                break
+        except ValueError:
+            print(Fore.RED + "         Invalid input! Please enter a valid number.")
+            time.sleep(1)
+            os.system('cls')
+    return wantsave, bet
+
+
 #MAIN
   #TODO: Find code to take command as Key press down instead of enter. 
   #keyboard module an option, but refreshes too much, makes game glitchy
   #TODO: low prio. card strings become scrambled if console size becomes smaller
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
-  #TODO: should not be able to bet more than dealer has
   #FIXME: cannot double if bet*2 is more than player balance
-  #TODO: refactor save function
+  #TODO: refactor bet function
 
 
 
@@ -211,31 +242,14 @@ while True:
                     gameoverinput = input()
                     break
             else:
-                while True:
-                    try:
-                        #Bet 
-                        print(Fore.YELLOW + "\n\n\n\n\n\n         Player's balance: "+ Fore.GREEN +f"{playerbalance}$"+ Fore.YELLOW +"    Dealer's balance: "+Fore.GREEN +f"{dealerbalance}$")
-                        print(Fore.YELLOW + "         How much do you want to bet? Write 0 to save and exit.")
-                        bet = int(input(Fore.GREEN +"         "))
-                        if bet < 0:
-                            print(Fore.RED +"         Minimum bet is 1$.")
-                            time.sleep(1)
-                            os.system('cls')
-                        elif bet > playerbalance:
-                            print(Fore.RED +"         Cannot bet more than available funds.")
-                            time.sleep(1)
-                            os.system('cls')
-                        #Save game
-                        elif bet == 0:
-                            exitaftersave = saveGame(playerbalance, dealerbalance)
-                            break
-                            
-                        else:
-                            break
-                    except ValueError:
-                        print(Fore.RED + Style.BRIGHT + "         Invalid input! Please enter a valid number.")
-                        time.sleep(1)
-                        os.system('cls')
+                
+                #Bet amount
+                wantsave, bet = checkBet()
+
+                #Save 
+                if wantsave == True:
+                    exitaftersave = saveGame(playerbalance, dealerbalance)
+
 
                 #Initialize deck for the round
                 deck = cards.CardDeck()
@@ -333,7 +347,7 @@ while True:
         command = input()
     elif command == "4":#(Quit)
         os.system('cls')
-        print("Bye")
+        print("Game exited")
         break
     else: 
         print (Fore.RED + "          Invalid command!")
