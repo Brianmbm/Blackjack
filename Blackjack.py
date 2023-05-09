@@ -123,7 +123,34 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
     dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
     playerbalance, dealerbalance = checkWinner(dealertotal, playertotal, bet, playerbalance, dealerbalance)
     return playerbalance, dealerbalance
-
+def loadGame():
+    fhand = open('saves.txt', 'r')
+    saves = fhand.read()
+    fhand.close()
+    saveline = saves.split('\n')
+    savename = []
+    playertotlist = []
+    dealertotlist = []
+    index = 0
+    os.system('cls')
+    print("\n\n\n\n\n")
+    for line in saveline:
+        nameandtotals = line.split(' ')
+        savename.append(nameandtotals[0])
+        playertotlist.append(int(nameandtotals[1]))
+        dealertotlist.append(int(nameandtotals[2]))
+        print(Fore.YELLOW + f"          {index+1}. {savename[index]} (Player: {playertotlist[index]}, Dealer: {dealertotlist[index]})")
+        index = index + 1
+    while True:
+        loadsave = input("          Write number and press enter:")
+        try:
+            loadsave = int(loadsave)
+            playerbalance = playertotlist[loadsave-1]
+            dealerbalance = dealertotlist[loadsave-1]
+            break
+        except:
+            print(Fore.RED + "Invalid input! Please enter a valid number.")
+    return playerbalance, dealerbalance
 #MAIN
   #TODO: Find code to take command as Key press down instead of enter. 
   #keyboard module an option, but refreshes too much, makes game glitchy
@@ -131,8 +158,7 @@ def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
   #TODO: should not be able to bet more than dealer has
   #FIXME: cannot double if bet*2 is more than player balance
-  #TODO: fix so that you cant save more than a word
-  #TODO: refactor load and save functions
+  #TODO: refactor save function
 
 
 
@@ -152,32 +178,7 @@ while True:
         
         #(Load)
         if command == "2":
-            fhand = open('saves.txt', 'r')
-            saves = fhand.read()
-            fhand.close()
-            saveline = saves.split('\n')
-            savename = []
-            playertotlist = []
-            dealertotlist = []
-            index = 0
-            os.system('cls')
-            print("\n\n\n\n\n")
-            for line in saveline:
-                nameandtotals = line.split(' ')
-                savename.append(nameandtotals[0])
-                playertotlist.append(int(nameandtotals[1]))
-                dealertotlist.append(int(nameandtotals[2]))
-                print(Fore.YELLOW + f"          {index+1}. {savename[index]} (Player: {playertotlist[index]}, Dealer: {dealertotlist[index]})")
-                index = index + 1
-            while True:
-                loadsave = input("          Write number and press enter:")
-                try:
-                    loadsave = int(loadsave)
-                    playerbalance = playertotlist[loadsave-1]
-                    dealerbalance = dealertotlist[loadsave-1]
-                    break
-                except:
-                    print(Fore.RED + "Invalid input! Please enter a valid number.")
+            playerbalance, dealerbalance = loadGame()
             
         #(Play)
         elif command == "1":
