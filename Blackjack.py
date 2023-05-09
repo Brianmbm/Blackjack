@@ -151,6 +151,19 @@ def loadGame():
         except:
             print(Fore.RED + "Invalid input! Please enter a valid number.")
     return playerbalance, dealerbalance
+def saveGame(playerbalance, dealerbalance):
+        print(Fore.YELLOW + "         Save name: ")
+        saveName = input("         ")
+        saveName = saveName.strip()
+        saveName = saveName.replace(" ","_")
+        filehand = open('saves.txt', 'a')
+        filehand.write("\n")
+        filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
+        filehand.close()
+        print("         Game saved successfully.")
+        time.sleep(2)
+        exitaftersave = True
+        return exitaftersave
 #MAIN
   #TODO: Find code to take command as Key press down instead of enter. 
   #keyboard module an option, but refreshes too much, makes game glitchy
@@ -214,17 +227,7 @@ while True:
                             os.system('cls')
                         #Save game
                         elif bet == 0:
-                            print(Fore.YELLOW + "         Save name: ")
-                            saveName = input("         ")
-                            saveName = saveName.strip()
-                            saveName = saveName.replace(" ","_")
-                            filehand = open('saves.txt', 'a')
-                            filehand.write("\n")
-                            filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
-                            filehand.close()
-                            print("         Game saved successfully.")
-                            time.sleep(2)
-                            exitaftersave = True
+                            exitaftersave = saveGame(playerbalance, dealerbalance)
                             break
                             
                         else:
