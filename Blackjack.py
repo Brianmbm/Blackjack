@@ -6,6 +6,8 @@ import titles
 import random
 import colorama
 from colorama import Fore, Back, Style
+import datetime
+from datetime import date
 
 
 colorama.init(autoreset=True)#Resets color for every string printed
@@ -156,9 +158,10 @@ def saveGame(playerbalance, dealerbalance):
         saveName = input("         ")
         saveName = saveName.strip()
         saveName = saveName.replace(" ","_")
+        today = date.today()
         filehand = open('saves.txt', 'a')
         filehand.write("\n")
-        filehand.write(saveName + " " + str(playerbalance) + " " + str(dealerbalance))
+        filehand.write(str(today)+"_"+saveName + " " + str(playerbalance) + " " + str(dealerbalance))
         filehand.close()
         print("         Game saved successfully.")
         time.sleep(2)
