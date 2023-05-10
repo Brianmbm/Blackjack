@@ -85,7 +85,9 @@ def checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance):
         dealerbalance += bet
     elif playertotal == 21 and dealertotal != 21:
         print (Fore.GREEN + Style.BRIGHT+"  Blackjack! You win")
-        winnings = bet * 3/2
+        #0.5 added so it doesnt round down when betting odd and converting to int
+        winnings = bet * 3/2+0.5
+        winnings = int(winnings)
         playerbalance += winnings
         dealerbalance -= winnings
     elif dealertotal > 21:
@@ -204,6 +206,7 @@ def checkBet():
   #keyboard module an option, but refreshes too much, makes game glitchy
   #TODO: low prio. card strings become scrambled if console size becomes smaller
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
+
 
 
 
