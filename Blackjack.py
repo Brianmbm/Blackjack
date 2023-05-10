@@ -204,8 +204,6 @@ def checkBet():
   #keyboard module an option, but refreshes too much, makes game glitchy
   #TODO: low prio. card strings become scrambled if console size becomes smaller
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
-  #FIXME: cannot double if bet*2 is more than player balance
-  #TODO: refactor bet function
 
 
 
@@ -319,20 +317,30 @@ while True:
 
                         
                         elif command == "d":#double
-                            os.system('cls')
-                            bet = bet*2
-                            playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
-                            cardsToString(playerCards, playhand)
-                            hiddenCardsToString(dealerCards)
-                            titles.gameMenu()
-                            time.sleep(0.5)
-                            dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                            if playertotal >= 21:
-                                playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
-                                break
+                            if bet*2 > playerbalance:
+                                print(Fore.RED + "  Not enough in balance to double!")
+                                time.sleep(1)
+                                os.system('cls')
+                                printBalance()
+                                cardsToString(playerCards, playhand)
+                                hiddenCardsToString(dealerCards)
+                                titles.gameMenu()
+
                             else:
-                                playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
-                                break
+                                os.system('cls')
+                                bet = bet*2
+                                playerCards = dealcard(playerCards, dealerCards, deck, playerCards)
+                                cardsToString(playerCards, playhand)
+                                hiddenCardsToString(dealerCards)
+                                titles.gameMenu()
+                                time.sleep(0.5)
+                                dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
+                                if playertotal >= 21:
+                                    playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
+                                    break
+                                else:
+                                    playerbalance, dealerbalance = dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand)
+                                    break
                         elif command == "q":#(quit):
                             break
 
