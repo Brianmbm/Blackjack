@@ -114,7 +114,7 @@ dealhand = "  DEALER'S HAND"
 #Dealer pulls card as long as dealer's total less than 17 or less than player
 def dealerTurn(playerCards, dealerCards, deck, playerbalance, dealerbalance, bet, playhand, dealhand):
     dealertotal, playertotal = calculateTotal(dealerCards, playerCards)
-    while dealertotal < 17 or dealertotal < playertotal:
+    while dealertotal < 17:
         dealerCards = dealcard(playerCards, dealerCards, deck, dealerCards)
         time.sleep(0.5)
         os.system('cls')
