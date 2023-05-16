@@ -3,7 +3,7 @@ import time
 import colorama
 from colorama import Fore, Back, Style
 
-
+#Large Ascii text created through https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
 #strings used in initial sequence
 
 heart = """\n\n\n    .-~~~-__-~~~-.

@@ -207,9 +207,6 @@ def checkBet():
   #TODO: low prio. card strings become scrambled if console size becomes smaller
   # than the size/amount of cards displayed. Check for module to start terminal at specific size
 
-
-
-
 titles.printTitle() #Prints intro sequence
 while True:
     #Menu

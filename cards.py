@@ -6,7 +6,7 @@ class Card:
         self.cardImage = cardImage
 
 
-
+#Inspiration for Ascii cards from https://www.asciiart.eu/miscellaneous/playing-cards
 class CardDeck:
     def __init__(self):
         self.deck = []
