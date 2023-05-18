@@ -335,7 +335,7 @@ while True:
                                 titles.gameMenu()
                                 time.sleep(0.5)
                                 dealertotal, playertotal = calculateTotal (dealerCards, playerCards)
-                                if playertotal >= 21:
+                                if playertotal > 21:
                                     playerbalance, dealerbalance = checkWinner (dealertotal, playertotal, bet, playerbalance, dealerbalance)
                                     break
                                 else:
